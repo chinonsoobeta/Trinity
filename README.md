@@ -1,17 +1,25 @@
 # Trinity
 
-Personal site. Design is settled; the site itself is not built yet.
+Personal site for Chinonso Obeta. Design is settled; the site itself is not
+built yet.
 
 ## State
 
 | | |
 |---|---|
-| Direction | Console — dark, modular, a rail of live widgets |
+| Direction | Console — dark, modular, a rail of live modules |
 | Pages | Home, Writing index, Projects, Now/About |
 | Viewports | Desktop (1280) and mobile (390) for each |
 | Built | Nothing yet |
 
 Design canvas: https://claude.ai/artifact/12qDFbG1Qurwx7iWwDydWF
+
+## Identity
+
+- **Name:** Chinonso Obeta
+- **Role:** Senior Policy Analyst, British Columbia Environmental Assessment Office
+- **Location:** Vancouver, British Columbia
+- **Footer disclaimer:** "Views my own." — on every page, beside the copyright
 
 ## `design/`
 
@@ -19,33 +27,48 @@ Source for the canvas artboards. These are Design Component files (`.dc.html`)
 — HTML wrapped in an `<x-dc>` element, so they don't render standalone in a
 browser. Read them as markup references when building the real pages.
 
-`canvas.json` lays them out and splits them across two pages: the chosen
-Console direction, and the two directions that weren't picked (Quiet Index,
-Broadsheet), kept for reference.
+`canvas.json` lays them out across two pages: the chosen Console direction,
+and the two that weren't picked (Quiet Index, Broadsheet), kept for reference.
 
-## Writing
+## Writing — pulled from Substack
 
-Posts live on Substack, not here. The Writing index lists them and links out;
-every row carries an `↗`. There is no on-site post page and no site-generated
-RSS feed — the Substack feed serves that.
+Posts live on Substack. The site lists them and links out; nothing is hosted
+here, and there is no on-site post page.
+
+- **Feed:** `https://chinonsoobeta.substack.com/feed`
+- **Publication:** https://chinonsoobeta.substack.com
+- **Pull per item:** `title`, `description` (the subtitle), `pubDate`, and the
+  `<enclosure>` image. Sort newest first.
+- All 6 current posts carry an image enclosure, so the thumbnail column can
+  assume one exists — but still design a fallback for a post without one.
+- Home shows the 4 most recent; the Writing index shows all, grouped by year.
+
+## Now Listening — manual
+
+Updated by hand, not scraped. Apple Music has no simple public now-playing
+endpoint the way Spotify does, so this reads from a data file in the repo:
+track, artist, album, year, artwork, and a link out.
+
+Options if automating it later becomes worth it are noted in the canvas build
+notes; none of them are free.
 
 ## Links
 
-Same four on every page and both viewports, in this order.
+Same three on every page and both viewports, in this order.
 
 | Label | Target | Status |
 |---|---|---|
-| email | chinonso8@gmail.com | temporary, to be replaced |
+| email | `mailto:chinonso8@gmail.com` | temporary, to be replaced |
 | github | https://github.com/chinonsoobeta | final |
-| instagram | — | handle needed |
-| substack | — | publication URL needed |
+| substack | https://chinonsoobeta.substack.com | final |
+
+Instagram is deferred — add the handle and it slots in.
 
 Email is a plain `mailto:`. It will be scraped once the site is public; that's
-the accepted tradeoff for one-click contact.
+the accepted tradeoff for one-click contact, and the reason to swap in an alias
+before launch.
 
 ## Design system
-
-Lifted from the artboards so it survives independently of them.
 
 **Colour**
 
@@ -60,9 +83,9 @@ Lifted from the artboards so it survives independently of them.
 | body | `#cfcbc1` | running text |
 | muted | `#8b877c` | secondary, labels |
 | dim | `#56564c` | dates, metadata, ↗ markers |
-| accent | `#cf9450` | links, active nav, progress |
+| accent | `#cf9450` | links, active nav |
 | cool | `#4fa8b0` | weather icon |
-| ok | `#5fbf7a` | online / active status |
+| ok | `#5fbf7a` | online status |
 
 **Type**
 
@@ -82,14 +105,17 @@ Lifted from the artboards so it survives independently of them.
 
 ## Live data
 
-Four things on the Home page are not static: online status, local time,
-weather, and now playing. Each needs a source, and each needs a resting state
-for when it's down or still loading. The values in the design are samples.
+Three things are still genuinely live: online status, local time, and weather
+(Vancouver). Each needs a source and a designed resting state for when it's
+down or still loading. Values in the design are samples.
 
 ## Outstanding
 
-- Name, role, city — every identity string is a bracketed placeholder
-- Instagram handle, Substack publication URL
+- Instagram handle
+- Projects — names, descriptions, stacks, links; all still placeholder
+- "Now" copy, "What I use" entries, "Open to" row
+- Verbatim post subtitles (the design shows one real subtitle and placeholders
+  for the rest; the build pulls all of them from the feed)
 - Static site generator vs. hand-rolled HTML
 - Hosting
-- Where the live-data endpoints come from
+- Weather and status endpoints

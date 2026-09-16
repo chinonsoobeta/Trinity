@@ -5,10 +5,10 @@
   ],
   "artboards": [
     { "file": "Main.dc.html", "title": "Home — desktop", "page": "console", "x": 0, "y": 0, "w": 1280, "h": 1560 },
-    { "file": "ConsoleMobile.dc.html", "title": "Home — mobile", "page": "console", "x": 1400, "y": 0, "w": 390, "h": 2900 },
+    { "file": "ConsoleMobile.dc.html", "title": "Home — mobile", "page": "console", "x": 1400, "y": 0, "w": 390, "h": 3200 },
 
-    { "file": "Writing.dc.html", "title": "Writing index — desktop", "page": "console", "x": 1910, "y": 0, "w": 1280, "h": 1500 },
-    { "file": "WritingMobile.dc.html", "title": "Writing index — mobile", "page": "console", "x": 3310, "y": 0, "w": 390, "h": 1800 },
+    { "file": "Writing.dc.html", "title": "Writing index — desktop", "page": "console", "x": 1910, "y": 0, "w": 1280, "h": 1600 },
+    { "file": "WritingMobile.dc.html", "title": "Writing index — mobile", "page": "console", "x": 3310, "y": 0, "w": 390, "h": 1700 },
 
     { "file": "Projects.dc.html", "title": "Projects — desktop", "page": "console", "x": 3820, "y": 0, "w": 1280, "h": 1500 },
     { "file": "ProjectsMobile.dc.html", "title": "Projects — mobile", "page": "console", "x": 5220, "y": 0, "w": 390, "h": 2400 },
@@ -26,9 +26,9 @@
       "id": "dir-console",
       "page": "console",
       "x": 0,
-      "y": 3060,
-      "w": 480,
-      "text": "BUILD NOTES\n\nFour pages. Writing links out to Substack, so there is no on-site post page.\n\nLive data: status, local time, weather and now playing are the only non-static parts, and they only appear on Home. Each needs a source and a designed resting state for when it's down or still loading. Values shown are sample.\n\nFooter is the same four links on every page and both viewports: email, github, instagram, substack.\n\nNav shows the active page in amber — no underline on desktop, underline on mobile."
+      "y": 3360,
+      "w": 500,
+      "text": "BUILD NOTES\n\nWRITING pulls from https://chinonsoobeta.substack.com/feed — title, subtitle, date and the image enclosure, newest first. Rows link out; nothing is hosted here.\n\nNOW LISTENING is manually updated, not scraped. Apple Music has no simple public now-playing endpoint. A data file in the repo holding track, artist, album, artwork and a link is enough.\n\nSTILL LIVE: online status, local time and weather. Each needs a source and a resting state for when it's down.\n\nFOOTER is the same three links everywhere: email, github, substack. Instagram deferred.\n\nPlaceholder image wells stand in for real Substack thumbnails and album art."
     },
     {
       "id": "dir-quiet",
