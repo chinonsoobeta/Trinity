@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Space Grotesk', 'Helvetica Neue', sans-serif; }
+    a { color: #cf9450; text-decoration: none; }
+    a:hover { color: #e6b273; }
+  </style>
+</helmet>
+
+<div style="width: 1280px; min-height: 1500px; background: #0f0f0d; color: #e9e6dd; padding: 40px 48px 56px; box-sizing: border-box; display: flex; flex-direction: column; gap: 40px">
+
+  <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 1px solid #2a2a25">
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.04em">[YOUR NAME]</div>
+    <div style="display: flex; gap: 28px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #8b877c">
+      <div>index</div>
+      <div>writing</div>
+      <div>projects</div>
+      <div style="color: #cf9450">now</div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px; max-width: 640px">
+    <div style="display: flex; align-items: baseline; gap: 16px">
+      <div style="font-size: 40px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1">Now</div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #56564c">updated [date]</div>
+    </div>
+    <div style="font-size: 17px; color: #8b877c; line-height: 1.55; text-wrap: pretty">What I'm spending time on at the moment. [Swap this line for your own framing, or cut it.]</div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 20px; align-items: start">
+
+    <!-- prose -->
+    <div style="grid-column: span 8; display: flex; flex-direction: column; gap: 20px">
+
+      <div style="background: #181815; border: 1px solid #2a2a25; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #8b877c">Working on</div>
+        <div style="font-size: 16px; line-height: 1.7; color: #cfcbc1; text-wrap: pretty">[Two or three sentences on the main thing. Be specific — "rewriting the sync layer so it stops losing edits offline" beats "working on a side project". Specifics are what make a now page worth reading twice.]</div>
+      </div>
+
+      <div style="background: #181815; border: 1px solid #2a2a25; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #8b877c">Reading</div>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; gap: 14px; align-items: baseline">
+            <div style="font-size: 16px; color: #e9e6dd; width: 220px; flex-shrink: 0">[Book title]</div>
+            <div style="font-size: 15px; color: #8b877c; line-height: 1.55">[Author] — [a clause on what you make of it.]</div>
+          </div>
+          <div style="height: 1px; background: #23231e"></div>
+          <div style="display: flex; gap: 14px; align-items: baseline">
+            <div style="font-size: 16px; color: #e9e6dd; width: 220px; flex-shrink: 0">[Book title]</div>
+            <div style="font-size: 15px; color: #8b877c; line-height: 1.55">[Author] — [a clause.]</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: #181815; border: 1px solid #2a2a25; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #8b877c">About</div>
+        <div style="font-size: 16px; line-height: 1.7; color: #cfcbc1; text-wrap: pretty">[The longer version — the paragraph a stranger reads when they want to know who you are. Where you've worked, what you care about, how you got here.]</div>
+        <div style="font-size: 16px; line-height: 1.7; color: #cfcbc1; text-wrap: pretty">[A second paragraph if you want one. Two is usually plenty.]</div>
+      </div>
+
+    </div>
+
+    <!-- rail -->
+    <div style="grid-column: span 4; display: flex; flex-direction: column; gap: 16px">
+
+      <div style="background: #181815; border: 1px solid #2a2a25; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #8b877c">At a glance</div>
+        <div style="display: flex; flex-direction: column; gap: 9px">
+          <div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #8b877c">Based in</span><span style="color: #cfcbc1">[city]</span></div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #8b877c">Doing</span><span style="color: #cfcbc1">[role]</span></div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #8b877c">Open to</span><span style="color: #cfcbc1">[what]</span></div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #8b877c">Since</span><span style="color: #cfcbc1">[year]</span></div>
+        </div>
+      </div>
+
+      <div style="background: #181815; border: 1px solid #2a2a25; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #8b877c">What I use</div>
+        <div style="display: flex; flex-direction: column; gap: 9px">
+          <div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #8b877c">Editor</span><span style="color: #cfcbc1">[editor]</span></div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #8b877c">Machine</span><span style="color: #cfcbc1">[machine]</span></div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #8b877c">Keyboard</span><span style="color: #cfcbc1">[keyboard]</span></div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #8b877c">Terminal</span><span style="color: #cfcbc1">[terminal]</span></div>
+        </div>
+      </div>
+
+      <div style="background: #181815; border: 1px solid #2a2a25; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 12px">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #8b877c">Elsewhere</div>
+        <div style="display: flex; flex-direction: column; gap: 2px; font-family: 'JetBrains Mono', monospace; font-size: 13px">
+          <a href="#" style="padding: 9px 0">email →</a>
+          <a href="#" style="padding: 9px 0">github →</a>
+          <a href="#" style="padding: 9px 0">[social] →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="margin-top: auto; padding-top: 24px; border-top: 1px solid #2a2a25; display: flex; justify-content: space-between; align-items: center">
+    <div style="display: flex; gap: 20px; font-family: 'JetBrains Mono', monospace; font-size: 13px">
+      <a href="#">email</a>
+      <a href="#">github</a>
+      <a href="#">[social]</a>
+      <a href="#">rss</a>
+    </div>
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #56564c">© [year] [your name]</div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

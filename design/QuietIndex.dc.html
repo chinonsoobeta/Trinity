@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500&display=swap">
+  <style>
+    body { margin: 0; font-family: 'Newsreader', Georgia, serif; }
+    a { color: #9c3d1c; text-decoration: none; border-bottom: 1px solid #d8bfae; }
+    a:hover { color: #7a2d13; border-bottom-color: #9c3d1c; }
+  </style>
+</helmet>
+
+<div style="width: 1280px; min-height: 1560px; background: #faf7f1; color: #1b1814; padding: 96px 48px 80px; box-sizing: border-box; display: flex; justify-content: center">
+  <div style="width: 600px; display: flex; flex-direction: column; gap: 56px">
+
+    <!-- masthead -->
+    <div style="display: flex; flex-direction: column; gap: 18px">
+      <div style="font-family: 'Instrument Serif', Georgia, serif; font-size: 56px; line-height: 1.05; letter-spacing: -0.015em">[Your Name]</div>
+      <div style="font-size: 20px; line-height: 1.6; color: #4a443c; font-weight: 300; text-wrap: pretty">[What you do], in [city]. [One more clause — what you care about, or what you're building.]</div>
+    </div>
+
+    <!-- now -->
+    <div style="display: flex; flex-direction: column; gap: 14px">
+      <div style="font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #8c8478; font-weight: 500">Now</div>
+      <div style="font-size: 18px; line-height: 1.75; color: #2e2822; font-weight: 300; text-wrap: pretty">[Two or three sentences on what you're spending time on at the moment. Keep it personal and specific — this is the part people actually read.]</div>
+      <div style="font-size: 14px; color: #8c8478; font-style: italic">Last updated [date]</div>
+    </div>
+
+    <div style="height: 1px; background: #e2dbd0"></div>
+
+    <!-- writing -->
+    <div style="display: flex; flex-direction: column; gap: 18px">
+      <div style="font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #8c8478; font-weight: 500">Writing</div>
+      <div style="display: flex; flex-direction: column; gap: 20px">
+        <div style="display: flex; flex-direction: column; gap: 5px">
+          <div style="font-family: 'Instrument Serif', Georgia, serif; font-size: 24px; line-height: 1.25">[Post title — the longer one, so you can see it wrap]</div>
+          <div style="font-size: 15px; color: #6e675c; font-weight: 300; line-height: 1.55">[A sentence of standfirst.] <span style="color: #a09789">· [August 2026]</span></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 5px">
+          <div style="font-family: 'Instrument Serif', Georgia, serif; font-size: 24px; line-height: 1.25">[A shorter post title]</div>
+          <div style="font-size: 15px; color: #6e675c; font-weight: 300; line-height: 1.55">[A sentence of standfirst.] <span style="color: #a09789">· [June 2026]</span></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 5px">
+          <div style="font-family: 'Instrument Serif', Georgia, serif; font-size: 24px; line-height: 1.25">[Another post title goes here]</div>
+          <div style="font-size: 15px; color: #6e675c; font-weight: 300; line-height: 1.55">[A sentence of standfirst.] <span style="color: #a09789">· [March 2026]</span></div>
+        </div>
+      </div>
+      <div style="font-size: 15px; margin-top: 2px"><a href="#">All writing →</a></div>
+    </div>
+
+    <div style="height: 1px; background: #e2dbd0"></div>
+
+    <!-- projects -->
+    <div style="display: flex; flex-direction: column; gap: 18px">
+      <div style="font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #8c8478; font-weight: 500">Projects</div>
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <div style="display: flex; gap: 16px; align-items: baseline">
+          <div style="font-family: 'Instrument Serif', Georgia, serif; font-size: 20px; width: 150px; flex-shrink: 0">[Project name]</div>
+          <div style="font-size: 16px; line-height: 1.6; color: #4a443c; font-weight: 300">[One sentence on what it is.]</div>
+        </div>
+        <div style="display: flex; gap: 16px; align-items: baseline">
+          <div style="font-family: 'Instrument Serif', Georgia, serif; font-size: 20px; width: 150px; flex-shrink: 0">[Project name]</div>
+          <div style="font-size: 16px; line-height: 1.6; color: #4a443c; font-weight: 300">[One sentence on what it is.]</div>
+        </div>
+        <div style="display: flex; gap: 16px; align-items: baseline">
+          <div style="font-family: 'Instrument Serif', Georgia, serif; font-size: 20px; width: 150px; flex-shrink: 0">[Project name]</div>
+          <div style="font-size: 16px; line-height: 1.6; color: #4a443c; font-weight: 300">[One sentence on what it is.]</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="height: 1px; background: #e2dbd0"></div>
+
+    <!-- elsewhere -->
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <div style="font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #8c8478; font-weight: 500">Elsewhere</div>
+      <div style="display: flex; gap: 24px; font-size: 17px">
+        <a href="#">Email</a>
+        <a href="#">GitHub</a>
+        <a href="#">[Social]</a>
+        <a href="#">RSS</a>
+      </div>
+    </div>
+
+    <div style="font-size: 14px; color: #a09789; font-style: italic; margin-top: 8px">[Your Name], [year]. Made in [city].</div>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

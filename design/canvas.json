@@ -1,0 +1,54 @@
+{
+  "pages": [
+    { "id": "console", "name": "Console" },
+    { "id": "unchosen", "name": "Unchosen directions" }
+  ],
+  "artboards": [
+    { "file": "Main.dc.html", "title": "Home — desktop", "page": "console", "x": 0, "y": 0, "w": 1280, "h": 1560 },
+    { "file": "ConsoleMobile.dc.html", "title": "Home — mobile", "page": "console", "x": 1400, "y": 0, "w": 390, "h": 2900 },
+
+    { "file": "Writing.dc.html", "title": "Writing index — desktop", "page": "console", "x": 1910, "y": 0, "w": 1280, "h": 1400 },
+    { "file": "WritingMobile.dc.html", "title": "Writing index — mobile", "page": "console", "x": 3310, "y": 0, "w": 390, "h": 1700 },
+
+    { "file": "Post.dc.html", "title": "Post — desktop", "page": "console", "x": 3820, "y": 0, "w": 1280, "h": 2400 },
+    { "file": "PostMobile.dc.html", "title": "Post — mobile", "page": "console", "x": 5220, "y": 0, "w": 390, "h": 2600 },
+
+    { "file": "Projects.dc.html", "title": "Projects — desktop", "page": "console", "x": 5730, "y": 0, "w": 1280, "h": 1500 },
+    { "file": "ProjectsMobile.dc.html", "title": "Projects — mobile", "page": "console", "x": 7130, "y": 0, "w": 390, "h": 2400 },
+
+    { "file": "Now.dc.html", "title": "Now / About — desktop", "page": "console", "x": 7640, "y": 0, "w": 1280, "h": 1500 },
+    { "file": "NowMobile.dc.html", "title": "Now / About — mobile", "page": "console", "x": 9040, "y": 0, "w": 390, "h": 1900 },
+
+    { "file": "QuietIndex.dc.html", "title": "Quiet Index — desktop", "page": "unchosen", "x": 0, "y": 0, "w": 1280, "h": 1560 },
+    { "file": "QuietIndexMobile.dc.html", "title": "Quiet Index — mobile", "page": "unchosen", "x": 1400, "y": 0, "w": 390, "h": 1800 },
+    { "file": "Broadsheet.dc.html", "title": "Broadsheet — desktop", "page": "unchosen", "x": 1910, "y": 0, "w": 1280, "h": 1620 },
+    { "file": "BroadsheetMobile.dc.html", "title": "Broadsheet — mobile", "page": "unchosen", "x": 3310, "y": 0, "w": 390, "h": 2700 }
+  ],
+  "annotations": [
+    {
+      "id": "dir-console",
+      "page": "console",
+      "x": 0,
+      "y": 3060,
+      "w": 480,
+      "text": "BUILD NOTES\n\nLive data: status, local time, weather and now playing are the only non-static parts, and they only appear on Home. Each needs a source and a designed resting state for when it's down or still loading. Values shown are sample.\n\nThe post page caps its column at 680px; nothing else on the site does. Dense is fine everywhere except the reading view.\n\nNav shows the active page in amber with no underline on desktop, underline on mobile."
+    },
+    {
+      "id": "dir-quiet",
+      "page": "unchosen",
+      "x": 0,
+      "y": 1660,
+      "w": 420,
+      "text": "QUIET INDEX — not chosen.\nOne column, serif, warm paper. Ships as static files with no integrations at all.\n\nKept here in case you want to pull anything from it."
+    },
+    {
+      "id": "dir-broadsheet",
+      "page": "unchosen",
+      "x": 1910,
+      "y": 1720,
+      "w": 420,
+      "text": "BROADSHEET — not chosen.\nNewspaper structure: masthead, live ticker, departments, 'Now' as the lead story.\n\nKept here in case you want to pull anything from it."
+    }
+  ],
+  "launch": { "view": "canvas", "page": "console" }
+}
