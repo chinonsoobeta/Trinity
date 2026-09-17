@@ -56,25 +56,42 @@ here, and there is no on-site post page.
 
 ## Now Listening — manual
 
-Edit `src/data/now-listening.json`, commit, push. Vercel rebuilds and the card
-changes. Apple Music has no simple public now-playing endpoint the way Spotify
+```
+npm run song -- "santigold les artistes"
+npm run song -- "bonobo kiara" --spotify https://open.spotify.com/track/xxxx
+```
+
+That looks the track up and writes `src/data/now-listening.json` — title,
+artist, album, release date, 600px cover art and the Apple Music link. Commit
+and push; Vercel rebuilds.
+
+**The Spotify link is the one thing that can't be looked up.** Odesli's public
+API is deprecated (401) and Spotify's own API needs registered credentials.
+Without `--spotify` the card falls back to a Spotify *search* URL built from the
+artist and track — it works, but lands on results rather than the song. Paste
+the real share link when you care.
+
+You can also edit the JSON by hand. Apple Music has no simple public now-playing endpoint the way Spotify
 does; the usual workaround is scrobbling to Last.fm and reading its API, which
 is real infrastructure for a widget. Manual costs nothing and can't silently go
 stale-and-wrong.
 
-You don't have to hunt for the artwork URL or the Apple Music link by hand —
-the iTunes Search API is public and needs no key:
+Leave `artwork` or `url` as `null` and the card degrades — placeholder art, one
+button instead of two — rather than breaking.
 
-```
-curl -s "https://itunes.apple.com/search?term=ARTIST+TRACK&entity=song&limit=1" \
-  | python3 -m json.tool
-```
+`scripts/song.mjs` uses the public iTunes Search API: no key, no account.
 
-Take `trackName`, `artistName`, `collectionName`, `trackViewUrl`, and
-`artworkUrl100` with `100x100bb` swapped for `600x600bb`.
+## Currently Wearing — manual
 
-Leave `artwork` or `url` as `null` and the card degrades — placeholder art, no
-link — rather than breaking.
+`src/data/wearing.json`: an optional `photo` and a list of `{k, v}` rows. Same
+shape as Current Machinery, plus the photo.
+
+Photos go in `public/wearing/` and are referenced as `/wearing/name.jpg`. Keep
+them under ~300KB — they live in git, so every version is kept forever. If this
+becomes something you change weekly, move the images to a host and store URLs
+instead.
+
+With `photo: null` the tile is just the item list.
 
 ## Links and contact
 
@@ -168,6 +185,7 @@ you're at your desk, so it would have been a hardcoded lie.
 | `src/data/site.json` | name, role, bio, coords, timezone, footer links |
 | `src/data/now.json` | Now copy, reading, About, At a glance, Current Machinery |
 | `src/data/projects.json` | every project card |
+| `src/data/wearing.json` | the Currently Wearing tile |
 | `src/data/now-listening.json` | the Now Listening card |
 
 Posts are not in a file — they come from the feed at build time.
@@ -181,6 +199,7 @@ Posts are not in a file — they come from the feed at build time.
   (then re-check the contrast table above)
 - Instagram handle — add to `site.json` links and it slots in
 - `projects.json` — every entry is still a placeholder
+- `wearing.json` — placeholder rows, no photo yet
 - `now.json` — Now copy, About, the "Open to" row
 - An avatar image for the hero (currently a drawn placeholder)
 - `site` in `astro.config.mjs` — needs the real domain before launch

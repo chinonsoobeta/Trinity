@@ -1,6 +1,4 @@
 ---
-import site from '../data/site.json';
-
 const { current } = Astro.props;
 
 const items = [
@@ -11,7 +9,6 @@ const items = [
 ];
 ---
 <header class="topbar">
-  <a class="topbar__name" href="/">{site.name}</a>
   <nav class="nav" aria-label="Primary">
     {items.map((item) => (
       <a href={item.href} aria-current={current === item.label ? 'page' : undefined}>{item.label}</a>

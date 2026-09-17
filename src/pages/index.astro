@@ -5,14 +5,22 @@ import ProjectCard from '../components/ProjectCard.astro';
 import site from '../data/site.json';
 import now from '../data/now.json';
 import listening from '../data/now-listening.json';
+import wearing from '../data/wearing.json';
 import projects from '../data/projects.json';
 import { getPosts } from '../lib/substack.js';
 
 const posts = await getPosts(4);
 const featured = projects.filter((p) => p.featured).slice(0, 2);
-const updated = new Date(now.updated).toLocaleDateString('en-CA', {
-  timeZone: 'UTC', year: 'numeric', month: 'long', day: 'numeric',
+const longDate = (value) => new Date(value).toLocaleDateString('en-US', {
+  timeZone: 'UTC', month: 'long', day: 'numeric', year: 'numeric',
 });
+const updated = longDate(now.updated);
+
+// No free API resolves an Apple Music URL to a Spotify one, so fall back to a
+// Spotify search built from the track. Paste a real link into the data file to
+// land on the song itself.
+const spotifyUrl = listening.spotify
+  ?? `https://open.spotify.com/search/${encodeURIComponent(`${listening.artist} ${listening.track}`)}`;
 ---
 <Base current="index">
   <section class="hero">
@@ -25,7 +33,6 @@ const updated = new Date(now.updated).toLocaleDateString('en-CA', {
     </div>
     <div class="hero__text">
       <h1 class="hero__name">{site.name}</h1>
-      <p class="hero__bio">{site.bio}</p>
     </div>
   </section>
 
@@ -37,7 +44,7 @@ const updated = new Date(now.updated).toLocaleDateString('en-CA', {
         <div class="stamp">Updated {updated}</div>
       </section>
 
-      <section class="card" style="--m: 5">
+      <section class="card" style="--m: 4">
         <div class="label-row">
           <h2 class="label">Recent Posts</h2>
           <a href="/writing">all posts →</a>
@@ -54,7 +61,7 @@ const updated = new Date(now.updated).toLocaleDateString('en-CA', {
       </section>
 
       {featured.length > 0 && (
-        <section style="display: flex; flex-direction: column; gap: 14px; --m: 6">
+        <section style="display: flex; flex-direction: column; gap: 14px; --m: 5">
           <h2 class="label" style="padding-left: 2px;">Projects</h2>
           <div class="projects-grid projects-grid--compact">
             {featured.map((project) => <ProjectCard project={project} compact />)}
@@ -65,17 +72,17 @@ const updated = new Date(now.updated).toLocaleDateString('en-CA', {
 
     <div class="col-rail">
       <section class="card card--rail" style="--m: 2">
-        <div class="place">
-          <span class="place__city">{site.city}</span>
-          <span class="place__time" data-localtime={site.timezone}>—</span>
-        </div>
         <div class="weather" data-weather
              data-lat={site.coords.lat} data-lon={site.coords.lon} data-tz={site.timezone}>
           <span class="weather__resting">—</span>
         </div>
+        <div class="place">
+          <span class="place__city">{site.city}</span>
+          <span class="place__time" data-localtime={site.timezone}>—</span>
+        </div>
       </section>
 
-      <section class="card card--rail listening" style="--m: 4">
+      <section class="card card--rail listening" style="--m: 3">
         <h2 class="label">Now listening</h2>
         <div class="listening__art">
           {listening.artwork
@@ -92,16 +99,30 @@ const updated = new Date(now.updated).toLocaleDateString('en-CA', {
         <div class="listening__meta">
           <div class="listening__track">{listening.track}</div>
           <div class="listening__artist">{listening.artist}</div>
-          <div class="listening__album">{listening.album} · {listening.year}</div>
+          <div class="listening__album">{listening.album}</div>
+          {listening.released && <div class="listening__album">{longDate(listening.released)}</div>}
         </div>
-        {listening.url && (
-          <a class="listening__link" href={listening.url} rel="noopener">
-            open in {listening.service} ↗
-          </a>
-        )}
+        <div class="listening__links">
+          {listening.url && <a href={listening.url} rel="noopener">Open in Apple Music</a>}
+          <a href={spotifyUrl} rel="noopener">Open in Spotify</a>
+        </div>
       </section>
 
-      <section class="card card--rail" style="--m: 3">
+      <section class="card card--rail" style="--m: 6">
+        <h2 class="label">Currently Wearing</h2>
+        {wearing.photo && (
+          <div class="wearing__photo">
+            <img src={wearing.photo} alt="" loading="lazy" decoding="async" />
+          </div>
+        )}
+        <dl class="kv">
+          {wearing.items.map((row) => (
+            <div><dt>{row.k}</dt><dd>{row.v}</dd></div>
+          ))}
+        </dl>
+      </section>
+
+      <section class="card card--rail" style="--m: 7">
         <h2 class="label">Current Machinery</h2>
         <dl class="kv">
           {now.machinery.map((row) => (
