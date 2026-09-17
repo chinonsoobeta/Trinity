@@ -1,9 +1,9 @@
 {
-  "track": "[Track title]",
-  "artist": "[Artist]",
-  "album": "[Album]",
-  "year": "[year]",
-  "artwork": null,
-  "url": null,
+  "track": "L.E.S. Artistes",
+  "artist": "Santigold",
+  "album": "Santigold",
+  "year": "2008",
+  "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Features114/v4/00/89/ab/0089ab23-4061-0b81-eb19-0ae5a01cd5b9/dj.lfccekgv.jpg/600x600bb.jpg",
+  "url": "https://music.apple.com/us/album/l-e-s-artistes/278671865?i=278671928",
   "service": "apple music"
 }

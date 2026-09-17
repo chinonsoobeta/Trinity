@@ -56,48 +56,79 @@ here, and there is no on-site post page.
 
 ## Now Listening — manual
 
-Edit `src/data/now-listening.json` and redeploy. Apple Music has no simple
-public now-playing endpoint the way Spotify does; the usual workaround is
-scrobbling to Last.fm and reading its API, which is real infrastructure for a
-widget. Manual costs nothing and can't silently go stale-and-wrong.
+Edit `src/data/now-listening.json`, commit, push. Vercel rebuilds and the card
+changes. Apple Music has no simple public now-playing endpoint the way Spotify
+does; the usual workaround is scrobbling to Last.fm and reading its API, which
+is real infrastructure for a widget. Manual costs nothing and can't silently go
+stale-and-wrong.
+
+You don't have to hunt for the artwork URL or the Apple Music link by hand —
+the iTunes Search API is public and needs no key:
+
+```
+curl -s "https://itunes.apple.com/search?term=ARTIST+TRACK&entity=song&limit=1" \
+  | python3 -m json.tool
+```
+
+Take `trackName`, `artistName`, `collectionName`, `trackViewUrl`, and
+`artworkUrl100` with `100x100bb` swapped for `600x600bb`.
 
 Leave `artwork` or `url` as `null` and the card degrades — placeholder art, no
 link — rather than breaking.
 
-## Links
+## Links and contact
 
-Same three on every page and both viewports, in this order.
+Same three on every page and both viewports: **email**, **github**, **substack**.
+Instagram is deferred — add it to `links` in `site.json` and it slots in.
 
-| Label | Target | Status |
-|---|---|---|
-| email | `mailto:chinonso8@gmail.com` | temporary, to be replaced |
-| github | https://github.com/chinonsoobeta | final |
-| substack | https://chinonsoobeta.substack.com | final |
+"email" is not a `mailto:`. It opens a modal contact form (native `<dialog>`,
+so the backdrop, Esc and focus handling are the browser's). The address is never
+put on the page, which also means it can't be scraped off it.
 
-Instagram is deferred — add the handle and it slots in.
+**The form needs a backend before it can send.** A static site cannot deliver
+email. Set `contact.endpoint` in `site.json` to a form endpoint that accepts a
+`POST` of `FormData` and returns 2xx — Formspree, Formspark and Web3Forms all
+do, all have free tiers:
 
-Email is a plain `mailto:`. It will be scraped once the site is public; that's
-the accepted tradeoff for one-click contact, and the reason to swap in an alias
-before launch.
+```json
+"contact": { "endpoint": "https://formspree.io/f/xxxxxxxx" }
+```
+
+With `endpoint` left `null` the dialog shows the address instead of a form, so
+the site never presents a control that silently does nothing. A hidden
+`_gotcha` honeypot field is included for spam.
+
+The form asks for Name, **Email** and Message. The email field is not optional
+padding — without it a message arrives with no way to reply.
 
 ## Design system
 
 **Colour**
 
-| Token | Value | Use |
-|---|---|---|
-| bg | `#0f0f0d` | page background |
-| panel | `#181815` | cards |
-| panel-alt | `#21211c` | image wells, nested blocks |
-| border | `#2a2a25` | card and section borders |
-| border-soft | `#1d1d19` | list row dividers |
-| text | `#e9e6dd` | headings, primary |
-| body | `#cfcbc1` | running text |
-| muted | `#8b877c` | secondary, labels |
-| dim | `#56564c` | dates, metadata, ↗ markers |
-| accent | `#cf9450` | links, active nav |
-| cool | `#4fa8b0` | weather icon |
-| ok | `#5fbf7a` | active project status |
+Contrast is measured, not eyeballed. `--bg` is a mid-tone purple at 11.6%
+relative luminance, which is bright enough that it cannot carry a quiet
+secondary tone — anything dimmer than `--body` fails AA on it. So `--muted` and
+`--dim` are **panel-only**, and everything that sits directly on the background
+uses `--text`, `--body` or `--accent`.
+
+| Token | Value | On bg | On panel | Use |
+|---|---|---|---|---|
+| bg | `#6F5296` | — | — | page background |
+| panel | `#42305C` | 1.8:1 | — | cards |
+| panel-alt | `#4E3A6B` | 1.6:1 | — | image wells, inputs |
+| border | `#634E85` | — | 1.6:1 | card and section borders |
+| border-soft | `#5C4680` | — | 1.5:1 | list row dividers |
+| text | `#FBF9FE` | 6.0:1 | 11.1:1 | headings, primary |
+| body | `#E7E0F3` | 4.9:1 | 9.0:1 | running text, anything on bg |
+| muted | `#CFC4E0` | 3.8:1 ✗ | 7.0:1 | panel only — labels, secondary |
+| dim | `#AC9EC2` | 2.5:1 ✗ | 4.7:1 | panel only — metadata |
+| accent | `#FFD59B` | 4.6:1 | 8.4:1 | links, active nav |
+| cool | `#8FE0E8` | 4.2:1 | 7.7:1 | weather icon |
+| ok | `#8FE3AB` | 4.1:1 | 7.6:1 | active project status |
+
+**Changing `--bg` means re-running those numbers.** Every other value is tuned
+against it. SVG icons use `stroke="currentColor"` and inherit from their
+container, so no colour is hardcoded outside `:root`.
 
 **Type**
 
@@ -106,6 +137,9 @@ before launch.
 - Section labels: mono 11px, `letter-spacing: 0.12em`, uppercase, muted
 - Page titles: 40px desktop / 32px mobile, weight 700, `letter-spacing: -0.02em`
 - Running text: 17px / 1.75
+- Post dates are sans, 15px, `--body` — deliberately the same as body text
+  rather than mono metadata. Format is `September 16, 2026`, rendered in UTC so
+  it doesn't shift with the build machine.
 
 **Layout**
 
@@ -132,7 +166,7 @@ you're at your desk, so it would have been a hardcoded lie.
 | File | Holds |
 |---|---|
 | `src/data/site.json` | name, role, bio, coords, timezone, footer links |
-| `src/data/now.json` | Now copy, reading, About, At a glance, What I use |
+| `src/data/now.json` | Now copy, reading, About, At a glance, Current Machinery |
 | `src/data/projects.json` | every project card |
 | `src/data/now-listening.json` | the Now Listening card |
 
@@ -140,9 +174,14 @@ Posts are not in a file — they come from the feed at build time.
 
 ## Outstanding
 
+- **A form backend** — `contact.endpoint` in `site.json`. Until it is set, the
+  contact dialog shows your address instead of a form
+- **Confirm the purple.** `--bg: #6F5296` is my read of the swatch you sent,
+  not a sampled value. If it's off, that one hex is the only thing to change
+  (then re-check the contrast table above)
 - Instagram handle — add to `site.json` links and it slots in
 - `projects.json` — every entry is still a placeholder
-- `now.json` — Now copy, About, What I use, the "Open to" row
+- `now.json` — Now copy, About, the "Open to" row
 - An avatar image for the hero (currently a drawn placeholder)
 - `site` in `astro.config.mjs` — needs the real domain before launch
 - Feed titles carry literal markdown asterisks (`*how*`); decide whether to

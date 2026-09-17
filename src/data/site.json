@@ -1,15 +1,27 @@
 {
   "name": "Chinonso Obeta",
   "role": "Senior Policy Analyst, British Columbia Environmental Assessment Office",
-  "city": "Vancouver",
+  "city": "Vancouver, British Columbia",
   "timezone": "America/Vancouver",
-  "coords": { "lat": 49.2827, "lon": -123.1207 },
+  "coords": {
+    "lat": 49.2827,
+    "lon": -123.1207
+  },
   "bio": "Senior Policy Analyst at the British Columbia Environmental Assessment Office, in Vancouver. Policy by day, writing by night.",
   "disclaimer": "Views my own.",
   "substack": "https://chinonsoobeta.substack.com",
+  "email": "chinonso8@gmail.com",
+  "contact": {
+    "endpoint": null
+  },
   "links": [
-    { "label": "email", "href": "mailto:chinonso8@gmail.com" },
-    { "label": "github", "href": "https://github.com/chinonsoobeta" },
-    { "label": "substack", "href": "https://chinonsoobeta.substack.com" }
+    {
+      "label": "github",
+      "href": "https://github.com/chinonsoobeta"
+    },
+    {
+      "label": "substack",
+      "href": "https://chinonsoobeta.substack.com"
+    }
   ]
 }

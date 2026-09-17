@@ -52,15 +52,16 @@ const updated = new Date(now.updated).toLocaleDateString('en-CA', {
       </section>
 
       <section class="card card--rail">
-        <h2 class="label">What I use</h2>
+        <h2 class="label">Current Machinery</h2>
         <dl class="kv">
-          {now.uses.map((row) => <div><dt>{row.k}</dt><dd>{row.v}</dd></div>)}
+          {now.machinery.map((row) => <div><dt>{row.k}</dt><dd>{row.v}</dd></div>)}
         </dl>
       </section>
 
       <section class="card card--rail">
         <h2 class="label">Elsewhere</h2>
         <div class="elsewhere">
+          <button type="button" class="contact-open" data-contact-open style="text-align: left; padding: 9px 0;">email →</button>
           {site.links.map((link) => <a href={link.href} rel="noopener">{link.label} →</a>)}
         </div>
       </section>

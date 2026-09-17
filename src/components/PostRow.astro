@@ -3,9 +3,12 @@ import ImagePlaceholder from './ImagePlaceholder.astro';
 
 const { post } = Astro.props;
 
-const pad = (n) => String(n).padStart(2, '0');
-// UTC throughout so the stamp doesn't shift with the build machine's timezone.
-const stamp = post.date ? `${pad(post.date.getUTCMonth() + 1)} · ${pad(post.date.getUTCDate())}` : '';
+// UTC throughout so the date doesn't shift with the build machine's timezone.
+const stamp = post.date
+  ? post.date.toLocaleDateString('en-US', {
+      timeZone: 'UTC', month: 'long', day: 'numeric', year: 'numeric',
+    })
+  : '';
 ---
 <article class="post">
   <div class="post__date">{stamp}</div>

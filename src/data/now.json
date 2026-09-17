@@ -1,22 +1,41 @@
 {
   "updated": "2026-09-17",
-  "working": "[Two or three sentences on the main thing. Be specific — \"rewriting the sync layer so it stops losing edits offline\" beats \"working on a side project\".]",
+  "working": "[Two or three sentences on the main thing. Be specific \u2014 \"rewriting the sync layer so it stops losing edits offline\" beats \"working on a side project\".]",
   "reading": [
-    { "title": "[Book title]", "note": "[Author] — [a clause on what you make of it.]" }
+    {
+      "title": "[Book title]",
+      "note": "[Author] \u2014 [a clause on what you make of it.]"
+    }
   ],
   "about": [
-    "[The longer version — the paragraph a stranger reads when they want to know who you are.]"
+    "[The longer version \u2014 the paragraph a stranger reads when they want to know who you are.]"
   ],
   "glance": [
-    { "k": "Based in", "v": "Vancouver, BC" },
-    { "k": "Doing", "v": "Policy analysis, BC EAO" },
-    { "k": "Writing at", "v": "Substack" },
-    { "k": "Open to", "v": "[what]" }
+    {
+      "k": "Based in",
+      "v": "Vancouver, BC"
+    },
+    {
+      "k": "Doing",
+      "v": "Policy analysis, BC EAO"
+    },
+    {
+      "k": "Writing at",
+      "v": "Substack"
+    },
+    {
+      "k": "Open to",
+      "v": "[what]"
+    }
   ],
-  "uses": [
-    { "k": "Editor", "v": "[editor]" },
-    { "k": "Machine", "v": "[machine]" },
-    { "k": "Keyboard", "v": "[keyboard]" },
-    { "k": "Terminal", "v": "[terminal]" }
+  "machinery": [
+    {
+      "k": "Machine",
+      "v": "Macbook Pro M4"
+    },
+    {
+      "k": "Keyboard",
+      "v": "Magic Keyboard"
+    }
   ]
 }

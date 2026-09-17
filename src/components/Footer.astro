@@ -5,6 +5,7 @@ const year = new Date().getFullYear();
 ---
 <footer class="footer">
   <div class="footer__links">
+    <button type="button" class="contact-open" data-contact-open>email</button>
     {site.links.map((link) => <a href={link.href}>{link.label}</a>)}
   </div>
   <div class="footer__fine">© {year} {site.name} · {site.disclaimer}</div>
