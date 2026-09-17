@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import PostRow from '../components/PostRow.astro';
+import site from '../data/site.json';
+import { getPosts, groupByYear } from '../lib/substack.js';
+
+const posts = await getPosts();
+const years = groupByYear(posts);
+---
+<Base current="writing" title="Writing"
+      description={`Writing by ${site.name} — policy, infrastructure and the things that make them hard.`}>
+  <section class="pagehead">
+    <h1>Writing</h1>
+    <p>Policy, infrastructure and the things that make them hard.</p>
+    <div class="callout">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#cf9450"
+           stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M7 17L17 7"></path>
+        <path d="M8.5 7H17v8.5"></path>
+      </svg>
+      <span>Posts open on Substack · <a href={`${site.substack}/subscribe`} rel="noopener">subscribe ↗</a></span>
+    </div>
+  </section>
+
+  {years.length > 0 ? (
+    years.map(([year, yearPosts]) => (
+      <section class="yeargroup">
+        <h2 class="year">{year}</h2>
+        <div class="posts posts--index">
+          {yearPosts.map((post) => <PostRow post={post} />)}
+        </div>
+      </section>
+    ))
+  ) : (
+    <p class="prose">
+      The feed couldn't be reached at build time. Everything is on
+      <a href={site.substack} rel="noopener"> Substack ↗</a>.
+    </p>
+  )}
+</Base>

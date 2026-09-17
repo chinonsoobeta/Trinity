@@ -1,0 +1,20 @@
+---
+import site from '../data/site.json';
+
+const { current } = Astro.props;
+
+const items = [
+  { label: 'index', href: '/' },
+  { label: 'writing', href: '/writing' },
+  { label: 'projects', href: '/projects' },
+  { label: 'now', href: '/now' },
+];
+---
+<header class="topbar">
+  <a class="topbar__name" href="/">{site.name}</a>
+  <nav class="nav" aria-label="Primary">
+    {items.map((item) => (
+      <a href={item.href} aria-current={current === item.label ? 'page' : undefined}>{item.label}</a>
+    ))}
+  </nav>
+</header>

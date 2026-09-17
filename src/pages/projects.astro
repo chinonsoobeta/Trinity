@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import site from '../data/site.json';
+import projects from '../data/projects.json';
+---
+<Base current="projects" title="Projects" description={`Things ${site.name} has built.`}>
+  <section class="pagehead">
+    <h1>Projects</h1>
+    <p>Things I've built, and what each one was for.</p>
+  </section>
+
+  {projects.length > 0 ? (
+    <div class="projects-grid">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  ) : (
+    <p class="prose">Nothing here yet.</p>
+  )}
+</Base>

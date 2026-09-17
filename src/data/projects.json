@@ -1,0 +1,22 @@
+[
+  {
+    "name": "[Project name]",
+    "description": "[Two sentences on what it is, who it's for, and what made it worth building.]",
+    "status": "active",
+    "tags": ["[stack]", "2026"],
+    "shot": null,
+    "live": null,
+    "source": null,
+    "featured": true
+  },
+  {
+    "name": "[Project name]",
+    "description": "[Two sentences on what it is and why it exists.]",
+    "status": "active",
+    "tags": ["[stack]", "2025"],
+    "shot": null,
+    "live": null,
+    "source": null,
+    "featured": true
+  }
+]

@@ -1,7 +1,6 @@
 # Trinity
 
-Personal site for Chinonso Obeta. Design is settled; the site itself is not
-built yet.
+Personal site for Chinonso Obeta. Built, not yet deployed.
 
 ## State
 
@@ -10,9 +9,19 @@ built yet.
 | Direction | Console — dark, modular, a rail of live modules |
 | Pages | Home, Writing index, Projects, Now/About |
 | Viewports | Desktop (1280) and mobile (390) for each |
-| Built | Nothing yet |
+| Built | Astro 7, static output, deploys to Vercel |
 
 Design canvas: https://claude.ai/artifact/12qDFbG1Qurwx7iWwDydWF
+
+```
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # -> dist/
+npm run preview
+```
+
+Vercel auto-detects Astro; no adapter or config needed. Set a deploy hook and
+call it from a Substack webhook (or a cron) so a new post rebuilds the site.
 
 ## Identity
 
@@ -23,12 +32,12 @@ Design canvas: https://claude.ai/artifact/12qDFbG1Qurwx7iWwDydWF
 
 ## `design/`
 
-Source for the canvas artboards. These are Design Component files (`.dc.html`)
-— HTML wrapped in an `<x-dc>` element, so they don't render standalone in a
-browser. Read them as markup references when building the real pages.
+The original mockups, kept for reference. These are Design Component files
+(`.dc.html`) — HTML wrapped in an `<x-dc>` element, so they don't render
+standalone in a browser.
 
-`canvas.json` lays them out across two pages: the chosen Console direction,
-and the two that weren't picked (Quiet Index, Broadsheet), kept for reference.
+**`src/` is now the source of truth, not `design/`.** The artboards have
+drifted: they still show the Online status dot, which was cut from the build.
 
 ## Writing — pulled from Substack
 
@@ -39,18 +48,21 @@ here, and there is no on-site post page.
 - **Publication:** https://chinonsoobeta.substack.com
 - **Pull per item:** `title`, `description` (the subtitle), `pubDate`, and the
   `<enclosure>` image. Sort newest first.
-- All 6 current posts carry an image enclosure, so the thumbnail column can
-  assume one exists — but still design a fallback for a post without one.
+- All 14 current posts carry an image enclosure. `PostRow` still falls back to
+  a placeholder for a post without one.
+- A feed outage does not fail the build: `src/lib/substack.js` warns, returns
+  an empty list, and the pages fall back to linking straight to Substack.
 - Home shows the 4 most recent; the Writing index shows all, grouped by year.
 
 ## Now Listening — manual
 
-Updated by hand, not scraped. Apple Music has no simple public now-playing
-endpoint the way Spotify does, so this reads from a data file in the repo:
-track, artist, album, year, artwork, and a link out.
+Edit `src/data/now-listening.json` and redeploy. Apple Music has no simple
+public now-playing endpoint the way Spotify does; the usual workaround is
+scrobbling to Last.fm and reading its API, which is real infrastructure for a
+widget. Manual costs nothing and can't silently go stale-and-wrong.
 
-Options if automating it later becomes worth it are noted in the canvas build
-notes; none of them are free.
+Leave `artwork` or `url` as `null` and the card degrades — placeholder art, no
+link — rather than breaking.
 
 ## Links
 
@@ -85,7 +97,7 @@ before launch.
 | dim | `#56564c` | dates, metadata, ↗ markers |
 | accent | `#cf9450` | links, active nav |
 | cool | `#4fa8b0` | weather icon |
-| ok | `#5fbf7a` | online status |
+| ok | `#5fbf7a` | active project status |
 
 **Type**
 
@@ -105,17 +117,34 @@ before launch.
 
 ## Live data
 
-Three things are still genuinely live: online status, local time, and weather
-(Vancouver). Each needs a source and a designed resting state for when it's
-down or still loading. Values in the design are samples.
+Two things are live, both client-side, both with a resting state that survives
+failure (verified — they render `—` when the network is unavailable):
+
+- **Local time** — `Intl.DateTimeFormat` in `America/Vancouver`, not the
+  visitor's timezone. Ticks every 30s.
+- **Weather** — Open-Meteo `/v1/forecast`. No API key, no account.
+
+The Online status dot from the original design was cut: nothing reports whether
+you're at your desk, so it would have been a hardcoded lie.
+
+## Where the content lives
+
+| File | Holds |
+|---|---|
+| `src/data/site.json` | name, role, bio, coords, timezone, footer links |
+| `src/data/now.json` | Now copy, reading, About, At a glance, What I use |
+| `src/data/projects.json` | every project card |
+| `src/data/now-listening.json` | the Now Listening card |
+
+Posts are not in a file — they come from the feed at build time.
 
 ## Outstanding
 
-- Instagram handle
-- Projects — names, descriptions, stacks, links; all still placeholder
-- "Now" copy, "What I use" entries, "Open to" row
-- Verbatim post subtitles (the design shows one real subtitle and placeholders
-  for the rest; the build pulls all of them from the feed)
-- Static site generator vs. hand-rolled HTML
-- Hosting
-- Weather and status endpoints
+- Instagram handle — add to `site.json` links and it slots in
+- `projects.json` — every entry is still a placeholder
+- `now.json` — Now copy, About, What I use, the "Open to" row
+- An avatar image for the hero (currently a drawn placeholder)
+- `site` in `astro.config.mjs` — needs the real domain before launch
+- Feed titles carry literal markdown asterisks (`*how*`); decide whether to
+  render them as emphasis or leave them
+- A real email alias to replace the Gmail address

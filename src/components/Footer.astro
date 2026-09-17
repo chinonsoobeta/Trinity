@@ -1,0 +1,11 @@
+---
+import site from '../data/site.json';
+
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="footer__links">
+    {site.links.map((link) => <a href={link.href}>{link.label}</a>)}
+  </div>
+  <div class="footer__fine">© {year} {site.name} · {site.disclaimer}</div>
+</footer>

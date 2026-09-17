@@ -1,0 +1,191 @@
+---
+import Base from '../layouts/Base.astro';
+import PostRow from '../components/PostRow.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import site from '../data/site.json';
+import now from '../data/now.json';
+import listening from '../data/now-listening.json';
+import projects from '../data/projects.json';
+import { getPosts } from '../lib/substack.js';
+
+const posts = await getPosts(4);
+const featured = projects.filter((p) => p.featured).slice(0, 2);
+const updated = new Date(now.updated).toLocaleDateString('en-CA', {
+  timeZone: 'UTC', year: 'numeric', month: 'long', day: 'numeric',
+});
+---
+<Base current="index">
+  <section class="hero">
+    <div class="hero__avatar">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#56564c"
+           stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="8.5" r="3.75"></circle>
+        <path d="M4.5 20.5c0-4.1 3.4-6.5 7.5-6.5s7.5 2.4 7.5 6.5"></path>
+      </svg>
+    </div>
+    <div class="hero__text">
+      <h1 class="hero__name">{site.name}</h1>
+      <p class="hero__bio">{site.bio}</p>
+    </div>
+  </section>
+
+  <div class="grid">
+    <div class="col-main">
+      <section class="card" style="--m: 1">
+        <h2 class="label">Now</h2>
+        <p class="prose">{now.working}</p>
+        <div class="stamp">Updated {updated}</div>
+      </section>
+
+      <section class="card" style="--m: 5">
+        <div class="label-row">
+          <h2 class="label">Writing</h2>
+          <a href="/writing">all posts →</a>
+        </div>
+        {posts.length > 0 ? (
+          <div class="posts">
+            {posts.map((post) => <PostRow post={post} />)}
+          </div>
+        ) : (
+          <p class="prose">
+            Posts are on <a href={site.substack} rel="noopener">Substack ↗</a>.
+          </p>
+        )}
+      </section>
+
+      {featured.length > 0 && (
+        <section style="display: flex; flex-direction: column; gap: 14px; --m: 6">
+          <h2 class="label" style="padding-left: 2px;">Projects</h2>
+          <div class="projects-grid projects-grid--compact">
+            {featured.map((project) => <ProjectCard project={project} compact />)}
+          </div>
+        </section>
+      )}
+    </div>
+
+    <div class="col-rail">
+      <section class="card card--rail" style="--m: 2">
+        <div class="place">
+          <span class="place__city">{site.city}</span>
+          <span class="place__time" data-localtime={site.timezone}>—</span>
+        </div>
+      </section>
+
+      <section class="card card--rail listening" style="--m: 4">
+        <h2 class="label">Now listening</h2>
+        <div class="listening__art">
+          {listening.artwork
+            ? <img src={listening.artwork} alt={`${listening.album} cover art`} />
+            : (
+              <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#3d3d36"
+                   stroke-width="1.2" stroke-linecap="round" aria-hidden="true">
+                <path d="M9 18V6l10-2v12"></path>
+                <circle cx="6.5" cy="18" r="2.5"></circle>
+                <circle cx="16.5" cy="16" r="2.5"></circle>
+              </svg>
+            )}
+        </div>
+        <div class="listening__meta">
+          <div class="listening__track">{listening.track}</div>
+          <div class="listening__artist">{listening.artist}</div>
+          <div class="listening__album">{listening.album} · {listening.year}</div>
+        </div>
+        {listening.url && (
+          <a class="listening__link" href={listening.url} rel="noopener">
+            open in {listening.service} ↗
+          </a>
+        )}
+      </section>
+
+      <section class="card card--rail" style="--m: 3">
+        <h2 class="label">Weather</h2>
+        <div class="weather" data-weather
+             data-lat={site.coords.lat} data-lon={site.coords.lon} data-tz={site.timezone}>
+          <span class="weather__resting">—</span>
+        </div>
+      </section>
+
+      <section class="card card--rail" style="--m: 7">
+        <h2 class="label">What I use</h2>
+        <dl class="kv">
+          {now.uses.map((row) => (
+            <div><dt>{row.k}</dt><dd>{row.v}</dd></div>
+          ))}
+        </dl>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<script>
+  // Local time in the site's timezone, not the visitor's.
+  const clock = document.querySelector('[data-localtime]');
+  if (clock) {
+    const tz = clock.getAttribute('data-localtime');
+    const render = () => {
+      try {
+        clock.textContent = new Intl.DateTimeFormat('en-CA', {
+          timeZone: tz, hour: '2-digit', minute: '2-digit', hour12: false,
+        }).format(new Date());
+      } catch {
+        clock.textContent = '—';
+      }
+    };
+    render();
+    setInterval(render, 30_000);
+  }
+
+  // Weather. Open-Meteo needs no API key. On any failure the resting "—" stays.
+  const WMO = {
+    0: 'Clear', 1: 'Mainly clear', 2: 'Partly cloudy', 3: 'Overcast',
+    45: 'Fog', 48: 'Rime fog',
+    51: 'Light drizzle', 53: 'Drizzle', 55: 'Heavy drizzle',
+    56: 'Freezing drizzle', 57: 'Freezing drizzle',
+    61: 'Light rain', 63: 'Rain', 65: 'Heavy rain',
+    66: 'Freezing rain', 67: 'Freezing rain',
+    71: 'Light snow', 73: 'Snow', 75: 'Heavy snow', 77: 'Snow grains',
+    80: 'Rain showers', 81: 'Rain showers', 82: 'Heavy showers',
+    85: 'Snow showers', 86: 'Snow showers',
+    95: 'Thunderstorm', 96: 'Thunderstorm', 99: 'Thunderstorm',
+  };
+
+  const box = document.querySelector('[data-weather]');
+  if (box) {
+    const { lat, lon, tz } = box.dataset;
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}`
+      + `&current=temperature_2m,weather_code&timezone=${encodeURIComponent(tz)}`;
+
+    fetch(url)
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(String(res.status)))))
+      .then((data) => {
+        const temp = data?.current?.temperature_2m;
+        const code = data?.current?.weather_code;
+        if (typeof temp !== 'number') throw new Error('no reading');
+        box.innerHTML = '';
+
+        const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        icon.setAttribute('width', '26');
+        icon.setAttribute('height', '26');
+        icon.setAttribute('viewBox', '0 0 24 24');
+        icon.setAttribute('fill', 'none');
+        icon.setAttribute('stroke', '#4fa8b0');
+        icon.setAttribute('stroke-width', '1.5');
+        icon.setAttribute('stroke-linecap', 'round');
+        icon.setAttribute('aria-hidden', 'true');
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', 'M7 17.5h9.5a3.5 3.5 0 0 0 .3-7 5 5 0 0 0-9.5-1A3.75 3.75 0 0 0 7 17.5z');
+        icon.appendChild(path);
+
+        const value = document.createElement('span');
+        value.className = 'weather__temp';
+        value.textContent = `${temp.toFixed(1)}°`;
+
+        const desc = document.createElement('span');
+        desc.className = 'weather__desc';
+        desc.textContent = WMO[code] ?? '';
+
+        box.append(icon, value, desc);
+      })
+      .catch(() => { /* resting state stays */ });
+  }
+</script>

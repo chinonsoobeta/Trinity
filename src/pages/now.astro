@@ -1,0 +1,69 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.json';
+import now from '../data/now.json';
+
+const updated = new Date(now.updated).toLocaleDateString('en-CA', {
+  timeZone: 'UTC', year: 'numeric', month: 'long', day: 'numeric',
+});
+---
+<Base current="now" title="Now" description={`What ${site.name} is spending time on at the moment.`}>
+  <section class="pagehead">
+    <div class="pagehead__meta">
+      <h1>Now</h1>
+      <span class="pagehead__stamp">updated {updated}</span>
+    </div>
+    <p>What I'm spending time on at the moment.</p>
+  </section>
+
+  <div class="grid">
+    <div class="col-main">
+      <section class="card">
+        <h2 class="label">Working on</h2>
+        <p class="prose">{now.working}</p>
+      </section>
+
+      {now.reading?.length > 0 && (
+        <section class="card">
+          <h2 class="label">Reading</h2>
+          <div class="kv">
+            {now.reading.map((book) => (
+              <div>
+                <span class="kv__k" style="color: var(--text); flex-shrink: 1;">{book.title}</span>
+                <span class="kv__v">{book.note}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section class="card">
+        <h2 class="label">About</h2>
+        {now.about.map((para) => <p class="prose">{para}</p>)}
+      </section>
+    </div>
+
+    <div class="col-rail">
+      <section class="card card--rail">
+        <h2 class="label">At a glance</h2>
+        <dl class="kv">
+          {now.glance.map((row) => <div><dt>{row.k}</dt><dd>{row.v}</dd></div>)}
+        </dl>
+      </section>
+
+      <section class="card card--rail">
+        <h2 class="label">What I use</h2>
+        <dl class="kv">
+          {now.uses.map((row) => <div><dt>{row.k}</dt><dd>{row.v}</dd></div>)}
+        </dl>
+      </section>
+
+      <section class="card card--rail">
+        <h2 class="label">Elsewhere</h2>
+        <div class="elsewhere">
+          {site.links.map((link) => <a href={link.href} rel="noopener">{link.label} →</a>)}
+        </div>
+      </section>
+    </div>
+  </div>
+</Base>

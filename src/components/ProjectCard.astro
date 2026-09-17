@@ -1,0 +1,40 @@
+---
+import ImagePlaceholder from './ImagePlaceholder.astro';
+
+const { project, compact = false } = Astro.props;
+const archived = project.status === 'archived';
+---
+<article class:list={['card', 'project', compact && 'project--compact']}>
+  {(project.shot || !compact) && (
+    <div class="project__shot">
+      {project.shot
+        ? <img src={project.shot} alt="" loading="lazy" decoding="async" />
+        : <ImagePlaceholder size={compact ? 24 : 32} />}
+    </div>
+  )}
+
+  <div class="project__head">
+    <div class="project__name">{project.name}</div>
+    {!compact && (
+      <div class:list={['status', archived && 'status--archived']}>
+        <span class="status__dot"></span>
+        <span class="status__label">{archived ? 'archived' : 'active'}</span>
+      </div>
+    )}
+  </div>
+
+  <p class="project__desc">{project.description}</p>
+
+  {project.tags?.length > 0 && (
+    <div class="chips">
+      {project.tags.map((tag) => <span class="chip">{tag}</span>)}
+    </div>
+  )}
+
+  {!compact && (project.live || project.source) && (
+    <div class="project__links">
+      {project.live && <a href={project.live} rel="noopener">live →</a>}
+      {project.source && <a href={project.source} rel="noopener">source →</a>}
+    </div>
+  )}
+</article>
