@@ -5,8 +5,10 @@
  *   npm run song -- "santigold les artistes"
  *   npm run song -- "bonobo kiara" --spotify https://open.spotify.com/track/xxxx
  *
- * Looks the track up on the public iTunes Search API (no key, no account) and
- * writes src/data/now-listening.json. Commit and push; Vercel does the rest.
+ * Writes the track, artist and album to src/data/now-listening.json. Cover art
+ * and the Apple Music link are resolved at build time, so you never edit those
+ * by hand. Running this first also shows you which album matched, which is the
+ * only thing worth checking before you push.
  *
  * The Spotify link is optional. Without one the card falls back to a Spotify
  * search URL built from the artist and track, which works but lands on results
@@ -39,20 +41,22 @@ if (!hit) {
   process.exit(1);
 }
 
+// Only the identifying fields are stored. Cover art, the Apple Music link and
+// the release date are resolved at build time by src/lib/music.js, so they can
+// never drift out of step with the track named here.
 const record = {
   track: hit.trackName,
   artist: hit.artistName,
   album: hit.collectionName,
-  released: hit.releaseDate ? hit.releaseDate.slice(0, 10) : null,
-  artwork: hit.artworkUrl100 ? hit.artworkUrl100.replace('100x100bb', '600x600bb') : null,
-  url: hit.trackViewUrl ? hit.trackViewUrl.split('&uo=')[0] : null,
   spotify,
+  artwork: null,
+  url: null,
 };
 
 const out = join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'data', 'now-listening.json');
 await writeFile(out, `${JSON.stringify(record, null, 2)}\n`);
 
 console.log(`${record.track} — ${record.artist}`);
-console.log(`${record.album}${record.released ? ` (${record.released})` : ''}`);
+console.log(`${record.album}${hit.releaseDate ? ` (${hit.releaseDate.slice(0, 10)})` : ''}`);
 if (!spotify) console.log('No --spotify link given; the card will use a Spotify search URL.');
 console.log('\nWritten to src/data/now-listening.json. Commit and push to publish.');

@@ -4,12 +4,14 @@ import PostRow from '../components/PostRow.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import site from '../data/site.json';
 import now from '../data/now.json';
-import listening from '../data/now-listening.json';
+import listeningEntry from '../data/now-listening.json';
 import wearing from '../data/wearing.json';
 import projects from '../data/projects.json';
 import { getPosts } from '../lib/substack.js';
+import { resolveListening } from '../lib/music.js';
 
 const posts = await getPosts(4);
+const listening = await resolveListening(listeningEntry);
 const featured = projects.filter((p) => p.featured).slice(0, 2);
 const longDate = (value) => new Date(value).toLocaleDateString('en-US', {
   timeZone: 'UTC', month: 'long', day: 'numeric', year: 'numeric',

@@ -23,6 +23,10 @@ npm run preview
 Vercel auto-detects Astro; no adapter or config needed. Set a deploy hook and
 call it from a Substack webhook (or a cron) so a new post rebuilds the site.
 
+Two things are fetched at build time, not in the browser: the Substack feed
+and the Now Listening lookup. Both degrade to the data on disk rather than
+failing the build.
+
 ## Identity
 
 - **Name:** Chinonso Obeta
@@ -54,32 +58,49 @@ here, and there is no on-site post page.
   an empty list, and the pages fall back to linking straight to Substack.
 - Home shows the 4 most recent; the Writing index shows all, grouped by year.
 
-## Now Listening — manual
+## Now Listening
+
+`src/data/now-listening.json` names the song. Nothing else.
+
+```json
+{
+  "track": "Amour plastique",
+  "artist": "Videoclub",
+  "album": "Euphories",
+  "spotify": null,
+  "artwork": null,
+  "url": null
+}
+```
+
+Cover art, the Apple Music link and the release date are **resolved at build
+time** from the track and artist (`src/lib/music.js`, public iTunes Search API,
+no key). So editing this file by hand — on GitHub, from a phone — means
+changing `track` and `artist` and nothing else. Artwork cannot drift out of
+step with the song, which it silently did when those fields were stored.
+
+- `album` is optional and only disambiguates: a track often appears on both a
+  single and an album. Name one and it's preferred; leave it `null` and the
+  first match wins.
+- `artwork` and `url` are optional **overrides**. Set either and the lookup is
+  ignored for that field.
+- If the lookup fails or matches nothing, the build warns and uses whatever is
+  in the file. It never fails the build over a music card.
+
+Optionally, from a clone:
 
 ```
-npm run song -- "santigold les artistes"
-npm run song -- "bonobo kiara" --spotify https://open.spotify.com/track/xxxx
+npm run song -- "videoclub amour plastique"
 ```
 
-That looks the track up and writes `src/data/now-listening.json` — title,
-artist, album, release date, 600px cover art and the Apple Music link. Commit
-and push; Vercel rebuilds.
+That writes the three identifying fields and prints which album matched — the
+one thing worth checking before pushing.
 
-**The Spotify link is the one thing that can't be looked up.** Odesli's public
-API is deprecated (401) and Spotify's own API needs registered credentials.
-Without `--spotify` the card falls back to a Spotify *search* URL built from the
-artist and track — it works, but lands on results rather than the song. Paste
-the real share link when you care.
-
-You can also edit the JSON by hand. Apple Music has no simple public now-playing endpoint the way Spotify
-does; the usual workaround is scrobbling to Last.fm and reading its API, which
-is real infrastructure for a widget. Manual costs nothing and can't silently go
-stale-and-wrong.
-
-Leave `artwork` or `url` as `null` and the card degrades — placeholder art, one
-button instead of two — rather than breaking.
-
-`scripts/song.mjs` uses the public iTunes Search API: no key, no account.
+**The Spotify link can't be looked up.** Odesli's public API is deprecated
+(401) and Spotify's own needs registered credentials. Set `spotify` to a share
+link, or leave it `null` and the button falls back to a Spotify search URL
+built from the artist and track — it works, but lands on results rather than
+the song.
 
 ## Currently Wearing — manual
 
@@ -192,6 +213,9 @@ Posts are not in a file — they come from the feed at build time.
 
 ## Outstanding
 
+- **Deployment protection.** The Vercel deployment currently 302s to Vercel
+  SSO, so nobody without an account can open it. Turn Deployment Protection off
+  for production before sharing the link
 - **A form backend** — `contact.endpoint` in `site.json`. Until it is set, the
   contact dialog shows your address instead of a form
 - **Confirm the purple.** `--bg: #6F5296` is my read of the swatch you sent,

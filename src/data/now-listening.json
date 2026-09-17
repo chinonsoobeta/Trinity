@@ -1,9 +1,8 @@
 {
-  "track": "Amour Plastique",
-  "artist": "Videoclub, Adele Castillon & Mattyeux",
+  "track": "Amour plastique",
+  "artist": "Videoclub",
   "album": "Euphories",
-  "released": "2021-01-29",
-  "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Features114/v4/00/89/ab/0089ab23-4061-0b81-eb19-0ae5a01cd5b9/dj.lfccekgv.jpg/600x600bb.jpg",
-  "url": "https://music.apple.com/us/album/l-e-s-artistes/278671865?i=278671928",
-  "spotify": null
+  "spotify": null,
+  "artwork": null,
+  "url": null
 }
