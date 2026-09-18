@@ -139,6 +139,24 @@ the site never presents a control that silently does nothing. A hidden
 The form asks for Name, **Email** and Message. The email field is not optional
 padding — without it a message arrives with no way to reply.
 
+## Name scramble
+
+The hero name resolves out of a scramble on load, and again on hover.
+
+There is no Unicode block for Gnommish — it's a constructed script, so real
+letterforms need a font file. `GLYPHS` in `src/pages/index.astro` is a stand-in
+set of Greek, Cyrillic, geometric and mathematical forms chosen for
+near-universal font coverage: a missing glyph renders as a tofu box, which
+reads as broken rather than arcane. Drop a licensed Gnommish font in
+`public/fonts/`, point `.scramble__live` at it and swap `GLYPHS`, and it runs
+on the real alphabet.
+
+A hidden copy of the final text reserves the exact width, so substituted glyphs
+cannot shift the layout and it survives a resize without measuring in JS
+(verified: the hero stays 1184×44 through every frame). Under
+`prefers-reduced-motion: reduce` the animation never runs and the name renders
+plainly.
+
 ## Design system
 
 **Colour**

@@ -94,6 +94,14 @@ img { max-width: 100%; display: block; }
 
 .hero { display: flex; }
 
+/* The name scrambles on load. A hidden copy of the final text reserves the
+   exact width so substituted glyphs can never shift the layout, and it keeps
+   working across a resize without measuring anything in JS. */
+.scramble { position: relative; display: inline-block; white-space: nowrap; }
+.scramble__ghost { visibility: hidden; }
+.scramble__live { position: absolute; left: 0; top: 0; }
+.scramble__live[data-running='true'] { color: var(--accent); }
+
 
 
 .hero__text { display: flex; flex-direction: column; gap: 10px; padding-top: 4px; }
