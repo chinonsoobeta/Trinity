@@ -30,10 +30,7 @@ const spotifyUrl = listening.spotify
 <Base current="index">
   <section class="hero">
     <h1 class="hero__name">
-      <span class="scramble">
-        <span class="scramble__ghost" aria-hidden="true">{site.name}</span>
-        <span class="scramble__live" data-scramble>{site.name}</span>
-      </span>
+      <span class="redact" data-redact>{site.name}</span>
     </h1>
   </section>
 
@@ -140,56 +137,17 @@ const spotifyUrl = listening.spotify
 </Base>
 
 <script>
-  // Name scramble. No Unicode block encodes Gnommish, so this is a set of
-  // circular and angular forms with near-universal font coverage — tofu boxes
-  // would read as broken rather than arcane. Swap GLYPHS for the real alphabet
-  // if a licensed Gnommish font ever lands in public/fonts.
-  const GLYPHS = [
-    ...'ΔΘΛΞΠΣΦΨΩΓϴϒϞϟϠ',
-    ...'ЖЗИЛФЦЧШЩЪЬЭЮЯЂЅЇЉЊЋЏ',
-    ...'◇◈◊○◌◍◎●◐◑◒◓◔◕◖◗◘◙',
-    ...'⊕⊖⊗⊘⊙⊚⊛⌀⌂∆∇∈∋∑∏√∞≈≡',
-  ];
-  const pick = () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-
-  const live = document.querySelector('[data-scramble]');
-  const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-  if (live && !calm.matches) {
-    const target = live.textContent;
-    let running = false;
-
-    const scramble = () => {
-      if (running) return;
-      running = true;
-      live.dataset.running = 'true';
-
-      const chars = [...target];
-      // Each character settles at its own moment, so the name resolves
-      // left to right rather than all at once.
-      const settleAt = chars.map((_, i) => 220 + i * 45 + Math.random() * 180);
-      const total = Math.max(...settleAt) + 60;
-      const started = performance.now();
-
-      const frame = (now) => {
-        const elapsed = now - started;
-        live.textContent = chars
-          .map((ch, i) => (ch === ' ' || elapsed >= settleAt[i] ? ch : pick()))
-          .join('');
-
-        if (elapsed < total) {
-          requestAnimationFrame(frame);
-        } else {
-          live.textContent = target;
-          live.dataset.running = 'false';
-          running = false;
-        }
-      };
-      requestAnimationFrame(frame);
+  // Redaction reveal. The bar only exists once this runs, so no-JS and
+  // reduced-motion visitors get the name with nothing covering it.
+  const redacted = document.querySelector('[data-redact]');
+  if (redacted && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const reveal = () => {
+      redacted.dataset.reveal = 'off';
+      void redacted.offsetWidth; // reflow, so the animation restarts rather than continuing
+      redacted.dataset.reveal = 'on';
     };
-
-    scramble();
-    live.closest('.scramble').addEventListener('pointerenter', scramble);
+    reveal();
+    redacted.addEventListener('pointerenter', reveal);
   }
 
   // Local time in the site's timezone, not the visitor's.

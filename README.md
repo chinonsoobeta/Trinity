@@ -139,23 +139,20 @@ the site never presents a control that silently does nothing. A hidden
 The form asks for Name, **Email** and Message. The email field is not optional
 padding — without it a message arrives with no way to reply.
 
-## Name scramble
+## Redaction reveal
 
-The hero name resolves out of a scramble on load, and again on hover.
+The hero name starts under a solid black bar that wipes away left to right,
+and replays on hover. It holds redacted for roughly a third of the animation
+before lifting, so the redacted state registers before it clears.
 
-There is no Unicode block for Gnommish — it's a constructed script, so real
-letterforms need a font file. `GLYPHS` in `src/pages/index.astro` is a stand-in
-set of Greek, Cyrillic, geometric and mathematical forms chosen for
-near-universal font coverage: a missing glyph renders as a tofu box, which
-reads as broken rather than arcane. Drop a licensed Gnommish font in
-`public/fonts/`, point `.scramble__live` at it and swap `GLYPHS`, and it runs
-on the real alphabet.
+The bar is drawn only once the script sets `data-reveal`, which means with
+JavaScript off, or `prefers-reduced-motion: reduce` set, there is simply no bar
+and the name is visible. A permanent black rectangle over your own name is the
+one failure worth designing out rather than hoping against.
 
-A hidden copy of the final text reserves the exact width, so substituted glyphs
-cannot shift the layout and it survives a resize without measuring in JS
-(verified: the hero stays 1184×44 through every frame). Under
-`prefers-reduced-motion: reduce` the animation never runs and the name renders
-plainly.
+The name is real text in the DOM throughout — the bar is a decorative
+pseudo-element — so screen readers and crawlers are unaffected, and the hero
+box does not change size at any point in the animation.
 
 ## Design system
 

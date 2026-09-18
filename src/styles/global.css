@@ -94,13 +94,32 @@ img { max-width: 100%; display: block; }
 
 .hero { display: flex; }
 
-/* The name scrambles on load. A hidden copy of the final text reserves the
-   exact width so substituted glyphs can never shift the layout, and it keeps
-   working across a resize without measuring anything in JS. */
-.scramble { position: relative; display: inline-block; white-space: nowrap; }
-.scramble__ghost { visibility: hidden; }
-.scramble__live { position: absolute; left: 0; top: 0; }
-.scramble__live[data-running='true'] { color: var(--accent); }
+/* The name starts under a redaction bar that wipes away left to right.
+   The bar is drawn only when the script adds data-reveal, so with JavaScript
+   off — or reduced motion on — the name is simply visible. A permanent black
+   rectangle over your own name is the one failure mode worth designing out. */
+.redact { position: relative; display: inline-block; }
+
+.redact::after { content: none; }
+
+.redact[data-reveal]::after {
+  content: '';
+  position: absolute;
+  inset: -0.06em -0.1em;
+  background: #000;
+  transform-origin: right center;
+  pointer-events: none;
+}
+
+.redact[data-reveal='on']::after {
+  animation: unredact 1150ms cubic-bezier(0.65, 0, 0.2, 1) forwards;
+}
+
+@keyframes unredact {
+  /* Hold long enough to register as redacted before it lifts. */
+  0%, 32% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
 
 
 
@@ -564,7 +583,9 @@ a.post__title:hover { color: var(--accent-hi); }
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 10px;
-  background: var(--panel-alt);
+  /* Cutout product images are shot on white; anything else looks like a
+     mistake behind them. The card stays purple. */
+  background: #fff;
   border: 1px solid var(--panel-edge);
   display: flex;
   align-items: center;
