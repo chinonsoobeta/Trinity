@@ -66,7 +66,7 @@ img { max-width: 100%; display: block; }
 
 .topbar {
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
   gap: 24px;
   padding-bottom: 20px;
@@ -92,20 +92,9 @@ img { max-width: 100%; display: block; }
 
 /* ---------- hero ---------- */
 
-.hero { display: flex; gap: 24px; align-items: flex-start; }
+.hero { display: flex; }
 
-.hero__avatar {
-  width: 88px;
-  height: 88px;
-  border-radius: 14px;
-  background: var(--panel-alt);
-  border: 1px solid var(--border-chip);
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
+
 
 .hero__text { display: flex; flex-direction: column; gap: 10px; padding-top: 4px; }
 
@@ -515,7 +504,19 @@ a.post__title:hover { color: var(--accent-hi); }
 .contact__fallback { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0; }
 
 /* Placeholder art inherits its container's colour (see ImagePlaceholder). */
-.hero__avatar, .post__thumb, .project__shot, .listening__art { color: var(--dim); }
+.post__thumb, .project__shot, .listening__art, .wear__shot { color: var(--dim); }
+
+/* A card heading that fills the top band, in plain text colour at regular
+   weight — deliberately not the small mono label used elsewhere. */
+.tile-title {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  text-align: center;
+}
 
 /* ---------- now listening (centred) ---------- */
 
@@ -547,16 +548,24 @@ a.post__title:hover { color: var(--accent-hi); }
 
 /* ---------- currently wearing ---------- */
 
-.wearing__photo {
+.wear { display: flex; flex-direction: column; gap: 18px; }
+
+.wear__item { display: flex; flex-direction: column; gap: 10px; }
+
+.wear__shot {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   border-radius: 10px;
   background: var(--panel-alt);
   border: 1px solid var(--panel-edge);
-  color: var(--dim);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
-.wearing__photo img { width: 100%; height: 100%; object-fit: cover; }
+/* Product shots are often cut out on transparent backgrounds, so contain
+   rather than cover — cropping a garment is worse than letterboxing it. */
+.wear__shot img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
+
+.wear__name { font-size: 15px; line-height: 1.45; text-align: center; color: var(--body); }
+a.wear__name:hover { color: var(--accent-hi); }
