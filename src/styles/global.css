@@ -21,6 +21,7 @@
   --ok: #8FE3AB;
 
   --scrim: rgba(24, 14, 38, 0.72);
+  --redaction: #251A36;
 
   --font-sans: 'Space Grotesk', 'Helvetica Neue', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
@@ -106,7 +107,7 @@ img { max-width: 100%; display: block; }
   content: '';
   position: absolute;
   inset: -0.06em -0.1em;
-  background: #000;
+  background: var(--redaction);
   transform-origin: right center;
   pointer-events: none;
 }

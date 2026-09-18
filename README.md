@@ -141,14 +141,20 @@ padding — without it a message arrives with no way to reply.
 
 ## Redaction reveal
 
-The hero name starts under a solid black bar that wipes away left to right,
+The hero name starts under a `--redaction` (`#251A36`) bar that wipes away
+left to right,
 and replays on hover. It holds redacted for roughly a third of the animation
 before lifting, so the redacted state registers before it clears.
 
 The bar is drawn only once the script sets `data-reveal`, which means with
 JavaScript off, or `prefers-reduced-motion: reduce` set, there is simply no bar
-and the name is visible. A permanent black rectangle over your own name is the
-one failure worth designing out rather than hoping against.
+and the name is visible. A permanent bar over your own name is the one
+failure worth designing out rather than hoping against.
+
+The bar is deep purple rather than pure black on purpose: `#000` would be the
+only true black on the site, where every other dark value is purple-tinted. Deep
+purple still reads as blacked-out at a glance without punching a hole in the
+palette.
 
 The name is real text in the DOM throughout — the bar is a decorative
 pseudo-element — so screen readers and crawlers are unaffected, and the hero
@@ -178,6 +184,7 @@ uses `--text`, `--body` or `--accent`.
 | accent | `#FFD59B` | 4.6:1 | 8.4:1 | links, active nav |
 | cool | `#8FE0E8` | 4.2:1 | 7.7:1 | weather icon |
 | ok | `#8FE3AB` | 4.1:1 | 7.6:1 | active project status |
+| redaction | `#251A36` | — | — | the hero name bar |
 
 **Changing `--bg` means re-running those numbers.** Every other value is tuned
 against it. SVG icons use `stroke="currentColor"` and inherit from their
