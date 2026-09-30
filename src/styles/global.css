@@ -93,7 +93,7 @@ img { max-width: 100%; display: block; }
 
 /* ---------- hero ---------- */
 
-.hero { display: flex; }
+.hero { display: flex; flex-direction: column; gap: 10px; }
 
 /* The name starts under a redaction bar that wipes away left to right.
    The bar is drawn only when the script adds data-reveal, so with JavaScript
@@ -124,7 +124,6 @@ img { max-width: 100%; display: block; }
 
 
 
-.hero__text { display: flex; flex-direction: column; gap: 10px; padding-top: 4px; }
 
 .hero__name {
   margin: 0;
@@ -403,9 +402,6 @@ a.project__name:hover { color: var(--accent-hi); }
   .nav a { padding: 14px 0; display: inline-block; }
   .nav a[aria-current='page'] { border-bottom: 2px solid var(--accent); }
 
-  .hero { flex-direction: column; gap: 16px; }
-  .hero__avatar { width: 72px; height: 72px; border-radius: 12px; }
-  .hero__text { padding-top: 0; }
   .hero__name { font-size: 32px; }
   .hero__bio { font-size: 16px; line-height: 1.55; }
 
