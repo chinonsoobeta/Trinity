@@ -31,10 +31,34 @@ function decodeEntities(value) {
     .trim();
 }
 
+// Shop images are often 2000px and well over a megabyte, for a tile about 310px
+// wide. Shopify's CDN resizes on request; 700px stays sharp on a 2x screen.
+// Anything that isn't a Shopify CDN URL is left as it is.
+function sized(src) {
+  try {
+    const u = new URL(src);
+    if (!u.pathname.includes('/cdn/shop/')) return src;
+    u.searchParams.set('width', '700');
+    return u.toString();
+  } catch {
+    return src;
+  }
+}
+
 export async function previewLink(url) {
   let html;
   try {
-    const res = await fetch(url, { headers: { 'user-agent': UA, accept: 'text/html' } });
+    const res = await fetch(url, {
+      headers: {
+        'user-agent': UA,
+        accept: 'text/html',
+        // Shopify stores split their catalogue by market, and a product listed
+        // only for Canada 404s for anyone else — including a build machine in
+        // a US data centre. This cookie is how Shopify picks the market; other
+        // shops ignore it.
+        cookie: 'localization=CA',
+      },
+    });
     if (!res.ok) throw new Error(`${res.status}`);
     html = await res.text();
   } catch (err) {
@@ -48,7 +72,7 @@ export async function previewLink(url) {
   const rawImage = metaTag(html, 'og:image:secure_url')
     ?? metaTag(html, 'og:image')
     ?? metaTag(html, 'twitter:image');
-  const image = rawImage ? rawImage.replace(/^http:\/\//, 'https://') : null;
+  const image = rawImage ? sized(rawImage.replace(/^http:\/\//, 'https://')) : null;
 
   if (!name && !image) {
     console.warn(`[wearing] no Open Graph tags found at ${url}`);
