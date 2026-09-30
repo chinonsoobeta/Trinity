@@ -4,8 +4,12 @@
     "name": "Witness Tree",
     "description": "A bilingual, evidence-first public record of forest change in Canada",
     "status": "active",
-    "tags": ["Next.js", "TypeScript", "open data"],
-    "shot": null,
+    "tags": [
+      "Next.js",
+      "TypeScript",
+      "open data"
+    ],
+    "shot": "/witness-tree.png",
     "live": "https://www.witnesstree.ca",
     "source": "https://github.com/chinonsoobeta/Witness_Tree",
     "featured": true

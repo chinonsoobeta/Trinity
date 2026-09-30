@@ -136,6 +136,13 @@ though GitHub normally supplies them.
 underscores. `shot` (an image path, `null` draws a placeholder) and `featured`
 (shows it on the home page) are file-only.
 
+The Witness Tree card uses that site's own social card, copied to
+`public/witness-tree.png` (1200x630, 182KB) rather than hotlinked from
+witnesstree.ca — one less cross-origin request, and it cannot change under the
+site without a commit here. `.project__shot` is set to a 1200/630 aspect ratio
+so a social card fits with no cropping; the previous fixed 180px height with
+`object-fit: cover` cut the title straight off.
+
 ## Links and contact
 
 Same three on every page and both viewports: **email**, **github**, **substack**.
