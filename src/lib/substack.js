@@ -16,6 +16,28 @@ function stripHtml(value) {
     .trim();
 }
 
+// Feed images are originals — one is a 4032x2268 camera photo at 4.3MB — shown
+// as thumbnails at most 152px wide. Substack's image proxy resizes any URL, so
+// every thumbnail is asked for at 320px (2x the widest slot). Verified: that
+// photo comes back at 20KB, and an already-proxied 281KB image at 27KB.
+const PROXY = 'https://substackcdn.com/image/fetch/';
+const SIZE = 'w_320,c_limit,f_auto,q_auto:good,fl_progressive:steep';
+
+function thumbnail(src) {
+  if (!src) return null;
+  try {
+    const { hostname, pathname } = new URL(src);
+    if (hostname === 'substackcdn.com' && pathname.startsWith('/image/fetch/')) {
+      // Already proxied, usually with a signature token first: add the width
+      // to its transform list rather than wrapping it a second time.
+      return src.replace(/(\/image\/fetch\/(?:\$s_![^,/]+!,)?)/, '$1w_320,c_limit,');
+    }
+    return `${PROXY}${SIZE}/${encodeURIComponent(src)}`;
+  } catch {
+    return src;
+  }
+}
+
 /**
  * Reads the Substack feed at build time.
  *
@@ -46,7 +68,7 @@ export async function getPosts(limit) {
         subtitle: stripHtml(item.description),
         url: item.link,
         date: Number.isNaN(date.getTime()) ? null : date,
-        image: item.enclosure?.['@_url'] ?? null,
+        image: thumbnail(item.enclosure?.['@_url']),
       };
     })
     .filter((post) => post.title && post.url)
