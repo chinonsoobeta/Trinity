@@ -125,16 +125,21 @@ from the GitHub API at build time: description, homepage, source URL, language
 and topics as tags, archived state, and last-pushed date. Editing the repo's
 About line updates the site.
 
-**The repo wins; the file is the safety net.** That ordering is deliberate. The
-unauthenticated API allows 60 requests an hour per IP and build machines share
-addresses, so a rate limit is a question of when. With the file as fallback a
-throttled build renders a slightly stale card rather than an empty one — which
-is why `projects.json` still carries a full description, tags and URLs even
-though GitHub normally supplies them.
+**The file wins; the repo fills whatever is left null, and always supplies
+`updated`.** Reading the real metadata settled that ordering: Witness_Tree's
+`homepage` field still points at a leftover `*.chatgpt.site` placeholder, and
+its About line is not the wording the project's own site uses. Curated prose and
+canonical links belong in the file where they can be checked; the repo is
+authoritative for what it maintains by itself — topics, language, archived
+state, last push.
 
-`name` is the exception and always comes from the file: repo names carry
-underscores. `shot` (an image path, `null` draws a placeholder) and `featured`
-(shows it on the home page) are file-only.
+File-first is also the safe ordering: the unauthenticated API allows 60 requests
+an hour per IP and build machines share addresses, so a rate limit is a question
+of when, and with real values in the file a throttled build still renders a
+complete card.
+
+Leave a field `null` to let the repo supply it. `shot` (an image path, `null`
+draws a placeholder) and `featured` (shows it on the home page) are file-only.
 
 The Witness Tree card uses that site's own social card, copied to
 `public/witness-tree.png` (1200x630, 182KB) rather than hotlinked from
