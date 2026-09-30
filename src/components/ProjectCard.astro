@@ -1,10 +1,10 @@
 ---
 import ImagePlaceholder from './ImagePlaceholder.astro';
 
-const { project, compact = false } = Astro.props;
+const { project } = Astro.props;
 const archived = project.status === 'archived';
-// The compact card on the home page has no link row, so the image and name
-// carry the link — to the live site when there is one, else the source.
+// The image and the name link to the live site when there is one, else the
+// source, so the whole top of the card works as a link.
 const href = project.live ?? project.source ?? null;
 const updated = project.updated
   ? new Date(project.updated).toLocaleDateString('en-US', {
@@ -12,25 +12,24 @@ const updated = project.updated
     })
   : null;
 ---
-<article class:list={['card', 'project', compact && 'project--compact']}>
-  {(project.shot || !compact) && (
-    <a class="project__shot" href={href ?? undefined} rel="noopener" tabindex="-1" aria-hidden="true">
-      {project.shot
-        ? <img src={project.shot} alt="" loading="lazy" decoding="async" />
-        : <ImagePlaceholder size={compact ? 24 : 32} />}
-    </a>
-  )}
+<article class="card project">
+  <slot name="top" />
+
+  <!-- Not lazy: this card sits at the top of both pages that use it. -->
+  <a class="project__shot" href={href ?? undefined} rel="noopener" tabindex="-1" aria-hidden="true">
+    {project.shot
+      ? <img src={project.shot} alt="" decoding="async" />
+      : <ImagePlaceholder size={32} />}
+  </a>
 
   <div class="project__head">
     {href
       ? <a class="project__name" href={href} rel="noopener">{project.name} <span class="out" aria-hidden="true">↗</span></a>
       : <div class="project__name">{project.name}</div>}
-    {!compact && (
-      <div class:list={['status', archived && 'status--archived']}>
-        <span class="status__dot"></span>
-        <span class="status__label">{archived ? 'archived' : 'active'}</span>
-      </div>
-    )}
+    <div class:list={['status', archived && 'status--archived']}>
+      <span class="status__dot"></span>
+      <span class="status__label">{archived ? 'archived' : 'active'}</span>
+    </div>
   </div>
 
   <p class="project__desc">{project.description}</p>
@@ -43,7 +42,7 @@ const updated = project.updated
 
   {updated && <div class="stamp">Updated {updated}</div>}
 
-  {!compact && (project.live || project.source) && (
+  {(project.live || project.source) && (
     <div class="project__links">
       {project.live && <a href={project.live} rel="noopener">live →</a>}
       {project.source && <a href={project.source} rel="noopener">source →</a>}

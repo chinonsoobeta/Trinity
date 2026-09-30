@@ -280,10 +280,8 @@ a.post__title:hover { color: var(--accent-hi); }
 /* ---------- projects ---------- */
 
 .projects-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-.projects-grid--compact { gap: 16px; }
 
 .project { gap: 14px; }
-.project--compact { padding: 20px; gap: 10px; }
 
 .project__shot {
   /* Matches a 1200x630 social card, so an og image fits with no cropping.
@@ -297,7 +295,6 @@ a.post__title:hover { color: var(--accent-hi); }
   justify-content: center;
   overflow: hidden;
 }
-.project--compact .project__shot { border-radius: var(--radius-inner); }
 .project__shot img { width: 100%; height: 100%; object-fit: cover; }
 
 .project__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
@@ -305,9 +302,7 @@ a.post__title:hover { color: var(--accent-hi); }
 a.project__name { color: var(--text); }
 a.project__name:hover { color: var(--accent-hi); }
 .project__name .out { color: var(--dim); font-size: 0.8em; }
-.project--compact .project__name { font-size: 16px; }
 .project__desc { font-size: 15px; color: var(--muted); line-height: 1.6; text-wrap: pretty; }
-.project--compact .project__desc { font-size: 14px; line-height: 1.55; }
 
 .status { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
 .status__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }

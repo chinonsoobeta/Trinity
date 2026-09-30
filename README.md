@@ -139,7 +139,8 @@ of when, and with real values in the file a throttled build still renders a
 complete card.
 
 Leave a field `null` to let the repo supply it. `shot` (an image path, `null`
-draws a placeholder) and `featured` (shows it on the home page) are file-only.
+draws a placeholder) and `featured` (shows it as the first card on the home page, full
+width, above Recent Posts) are file-only.
 
 The Witness Tree card uses that site's own social card, copied to
 `public/witness-tree.png` (1200x630, 182KB) rather than hotlinked from
