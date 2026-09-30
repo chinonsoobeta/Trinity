@@ -180,6 +180,19 @@ form, so the site never presents a control that silently does nothing.
 The form asks for Name, **Email** and Message. The email field is not optional
 padding — without it a message arrives with no way to reply.
 
+## Link previews and icons
+
+- `public/og.png` (1200x630, 30KB) is the image shown when the site is shared
+  in iMessage, Slack, LinkedIn and the like: the name, one line, and a few rows
+  of redacted "document text". It is a static image, so it does not follow
+  edits to the bio. Every page uses it.
+- `og:image` and `og:url` need absolute URLs, so `astro.config.mjs` sets `site`
+  from `VERCEL_PROJECT_PRODUCTION_URL` — Vercel's production domain, a custom
+  one once added — falling back to `datrinitypersonalsite.vercel.app`.
+- Tab icon: `favicon.svg`, with `favicon-32.png` for browsers that want a
+  bitmap. `apple-touch-icon.png` (180x180, full-bleed; iOS rounds the corners)
+  is what Safari shows in Favorites and on a home screen.
+
 ## Subscribe button
 
 Under the bio in the hero, linking to the Substack subscribe page. It is the
@@ -297,7 +310,6 @@ Posts are not in a file — they come from the feed at build time.
 - A screenshot for the Witness Tree card (`shot` is `null`, so it draws a
   placeholder). Put one in `public/` and point `shot` at it
 - An avatar image for the hero (currently a drawn placeholder)
-- `site` in `astro.config.mjs` — needs the real domain before launch
 - Feed titles carry literal markdown asterisks (`*how*`); decide whether to
   render them as emphasis or leave them
 - A real email alias to replace the Gmail address
