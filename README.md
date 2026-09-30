@@ -180,6 +180,15 @@ form, so the site never presents a control that silently does nothing.
 The form asks for Name, **Email** and Message. The email field is not optional
 padding — without it a message arrives with no way to reply.
 
+## Subscribe button
+
+Under the bio in the hero, linking to the Substack subscribe page. It is the
+one place every visitor sees without scrolling, and it follows straight on from
+"I like to write". Styled like the contact form's Send button, the site's other
+filled button; both take their text colour from `--on-accent` (9.3:1 on the
+accent). The global `a:hover` would otherwise turn its label the colour of its
+own fill, so the hover state resets it.
+
 ## Redaction reveal
 
 The hero name starts under a `--redaction` (`#251A36`) bar that wipes away

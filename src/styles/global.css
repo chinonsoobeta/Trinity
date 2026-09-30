@@ -17,6 +17,7 @@
   --dim: #AC9EC2;    /* panel only: 4.7:1 on panel */
   --accent: #FFD59B; /* 4.6:1 on bg, 8.4:1 on panel */
   --accent-hi: #FFE9C9;
+  --on-accent: #3A2A52; /* text on an accent fill: 9.3:1 */
   --cool: #8FE0E8;
   --ok: #8FE3AB;
 
@@ -132,6 +133,23 @@ img { max-width: 100%; display: block; }
   letter-spacing: -0.02em;
   line-height: 1.1;
 }
+
+/* The one filled button outside the contact form, so it shares that look.
+   The global a:hover would turn its text the colour of its own fill. */
+.hero__subscribe {
+  align-self: flex-start;
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 13px 18px;
+  border-radius: var(--radius-inner);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.hero__subscribe:hover { background: var(--accent-hi); color: var(--on-accent); }
 
 .hero__bio {
   margin: 0;
@@ -499,7 +517,7 @@ a.project__name:hover { color: var(--accent-hi); }
 .contact__send {
   font-family: var(--font-mono);
   font-size: 13px;
-  color: #3A2A52;
+  color: var(--on-accent);
   background: var(--accent);
   border: 0;
   border-radius: var(--radius-inner);
