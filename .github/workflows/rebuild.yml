@@ -26,8 +26,16 @@ jobs:
       - name: Ask Vercel for a production build
         env:
           DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+          EVENT: ${{ github.event_name }}
         run: |
           if [ -z "$DEPLOY_HOOK" ]; then
+            # A scheduled run without the secret skips instead of failing, so
+            # an unfinished setup doesn't send a failure email every six hours.
+            # A manual run still fails: that is the test of the setup.
+            if [ "$EVENT" = "schedule" ]; then
+              echo "::warning::VERCEL_DEPLOY_HOOK is not set yet, so no build was requested. See the comment at the top of .github/workflows/rebuild.yml."
+              exit 0
+            fi
             echo "::error::The VERCEL_DEPLOY_HOOK secret is not set. See the comment at the top of .github/workflows/rebuild.yml."
             exit 1
           fi

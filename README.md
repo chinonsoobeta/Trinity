@@ -39,8 +39,11 @@ One-time setup:
 
 - The hook URL works like a password — anyone holding it can trigger builds —
   which is why it is a secret and not in the file: this repository is public.
-- Without the secret, runs fail with a message saying so. A deleted hook fails
-  at once; only transient errors (timeouts, 429, 5xx) are retried.
+- Until the secret exists, scheduled runs skip with a warning rather than fail,
+  so an unfinished setup doesn't mean a failure email every six hours. A manual
+  run without it fails and says why — that is the test of the setup.
+- A deleted hook fails at once, on a schedule too; only transient errors
+  (timeouts, 429, 5xx) are retried.
 - GitHub pauses scheduled workflows in a public repository after 60 days with
   no activity in it, emails you, and puts a re-enable button in the Actions
   tab. Any commit counts, including an edit made in GitHub's web editor.
