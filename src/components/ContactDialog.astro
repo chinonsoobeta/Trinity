@@ -13,7 +13,6 @@ const endpoint = site.contact?.endpoint ?? null;
 
   {endpoint ? (
     <>
-      <p class="contact__intro">Goes straight to my inbox. I'll reply to the address you leave.</p>
       <form data-contact-form action={endpoint} method="post">
         <div class="field">
           <label for="contact-name">Name</label>
@@ -81,7 +80,7 @@ const endpoint = site.contact?.endpoint ?? null;
           throw new Error(payload?.errors?.[0]?.message || `Submission failed (${res.status})`);
         }
         status.dataset.state = 'ok';
-        status.textContent = 'Sent. Thanks — I’ll get back to you.';
+        status.textContent = 'Sent. I’ll get back to you soon!';
         form.reset();
       } catch (err) {
         // fetch rejects with a TypeError when the network itself fails; that

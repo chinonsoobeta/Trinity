@@ -3,6 +3,9 @@ import ImagePlaceholder from './ImagePlaceholder.astro';
 
 const { project, compact = false } = Astro.props;
 const archived = project.status === 'archived';
+// The compact card on the home page has no link row, so the image and name
+// carry the link — to the live site when there is one, else the source.
+const href = project.live ?? project.source ?? null;
 const updated = project.updated
   ? new Date(project.updated).toLocaleDateString('en-US', {
       timeZone: 'UTC', month: 'long', day: 'numeric', year: 'numeric',
@@ -11,15 +14,17 @@ const updated = project.updated
 ---
 <article class:list={['card', 'project', compact && 'project--compact']}>
   {(project.shot || !compact) && (
-    <div class="project__shot">
+    <a class="project__shot" href={href ?? undefined} rel="noopener" tabindex="-1" aria-hidden="true">
       {project.shot
         ? <img src={project.shot} alt="" loading="lazy" decoding="async" />
         : <ImagePlaceholder size={compact ? 24 : 32} />}
-    </div>
+    </a>
   )}
 
   <div class="project__head">
-    <div class="project__name">{project.name}</div>
+    {href
+      ? <a class="project__name" href={href} rel="noopener">{project.name} <span class="out" aria-hidden="true">↗</span></a>
+      : <div class="project__name">{project.name}</div>}
     {!compact && (
       <div class:list={['status', archived && 'status--archived']}>
         <span class="status__dot"></span>

@@ -306,6 +306,9 @@ a.post__title:hover { color: var(--accent-hi); }
 
 .project__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
 .project__name { font-size: 20px; font-weight: 500; }
+a.project__name { color: var(--text); }
+a.project__name:hover { color: var(--accent-hi); }
+.project__name .out { color: var(--dim); font-size: 0.8em; }
 .project--compact .project__name { font-size: 16px; }
 .project__desc { font-size: 15px; color: var(--muted); line-height: 1.6; text-wrap: pretty; }
 .project--compact .project__desc { font-size: 14px; line-height: 1.55; }
@@ -474,7 +477,7 @@ a.post__title:hover { color: var(--accent-hi); }
 }
 .contact::backdrop { background: var(--scrim); }
 
-.contact__head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 6px; }
+.contact__head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 18px; }
 .contact__title { font-size: 20px; font-weight: 500; }
 .contact__close {
   font-family: var(--font-mono);
@@ -487,7 +490,6 @@ a.post__title:hover { color: var(--accent-hi); }
 }
 .contact__close:hover { color: var(--text); }
 
-.contact__intro { font-size: 14px; color: var(--muted); line-height: 1.55; margin: 0 0 18px; }
 
 .contact form { display: flex; flex-direction: column; gap: 14px; }
 
