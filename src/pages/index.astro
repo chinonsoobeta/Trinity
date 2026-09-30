@@ -21,7 +21,6 @@ const featured = projects.filter((p) => p.featured).slice(0, 2);
 const longDate = (value) => new Date(value).toLocaleDateString('en-US', {
   timeZone: 'UTC', month: 'long', day: 'numeric', year: 'numeric',
 });
-const updated = longDate(now.updated);
 
 // No free API resolves an Apple Music URL to a Spotify one, so fall back to a
 // Spotify search built from the track. Paste a real link into the data file to
@@ -39,11 +38,6 @@ const spotifyUrl = listening.spotify
 
   <div class="grid">
     <div class="col-main">
-      <section class="card" style="--m: 1">
-        <h2 class="label">Now</h2>
-        <p class="prose">{now.working}</p>
-        <div class="stamp">Updated {updated}</div>
-      </section>
 
       <section class="card" style="--m: 4">
         <div class="label-row">
