@@ -1,7 +1,8 @@
 [
   {
+    "repo": "chinonsoobeta/Witness_Tree",
     "name": "Witness Tree",
-    "description": "A bilingual, evidence-first public record of forest change in Canada. Satellite-observed and documented change across BC, Alberta, Ontario and Quebec, with confidence levels and source provenance shown rather than implied.",
+    "description": "A bilingual, evidence-first public record of forest change in Canada",
     "status": "active",
     "tags": ["Next.js", "TypeScript", "open data"],
     "shot": null,

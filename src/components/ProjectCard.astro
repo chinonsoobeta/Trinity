@@ -3,6 +3,11 @@ import ImagePlaceholder from './ImagePlaceholder.astro';
 
 const { project, compact = false } = Astro.props;
 const archived = project.status === 'archived';
+const updated = project.updated
+  ? new Date(project.updated).toLocaleDateString('en-US', {
+      timeZone: 'UTC', month: 'long', day: 'numeric', year: 'numeric',
+    })
+  : null;
 ---
 <article class:list={['card', 'project', compact && 'project--compact']}>
   {(project.shot || !compact) && (
@@ -30,6 +35,8 @@ const archived = project.status === 'archived';
       {project.tags.map((tag) => <span class="chip">{tag}</span>)}
     </div>
   )}
+
+  {updated && <div class="stamp">Updated {updated}</div>}
 
   {!compact && (project.live || project.source) && (
     <div class="project__links">

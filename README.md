@@ -116,16 +116,25 @@ instead.
 
 With `photo: null` the tile is just the item list.
 
-## Projects
+## Projects — pulled from GitHub
 
-`src/data/projects.json`. One entry today: **Witness Tree**
-(witnesstree.ca / chinonsoobeta/Witness_Tree). Its description is lifted from
-the repo's own About line.
+`src/data/projects.json`. One entry today: **Witness Tree**.
 
-Fields: `name`, `description`, `status` (`active` or `archived`, which drives
-the dot), `tags`, `shot` (an image path, or `null` for a placeholder), `live`,
-`source`, and `featured` — featured entries appear on the home page, everything
-appears on /projects.
+Give an entry a `repo` (`"owner/name"`) and `src/lib/github.js` fills the card
+from the GitHub API at build time: description, homepage, source URL, language
+and topics as tags, archived state, and last-pushed date. Editing the repo's
+About line updates the site.
+
+**The repo wins; the file is the safety net.** That ordering is deliberate. The
+unauthenticated API allows 60 requests an hour per IP and build machines share
+addresses, so a rate limit is a question of when. With the file as fallback a
+throttled build renders a slightly stale card rather than an empty one — which
+is why `projects.json` still carries a full description, tags and URLs even
+though GitHub normally supplies them.
+
+`name` is the exception and always comes from the file: repo names carry
+underscores. `shot` (an image path, `null` draws a placeholder) and `featured`
+(shows it on the home page) are file-only.
 
 ## Links and contact
 
@@ -136,18 +145,24 @@ Instagram is deferred — add it to `links` in `site.json` and it slots in.
 so the backdrop, Esc and focus handling are the browser's). The address is never
 put on the page, which also means it can't be scraped off it.
 
-**The form needs a backend before it can send.** A static site cannot deliver
-email. Set `contact.endpoint` in `site.json` to a form endpoint that accepts a
-`POST` of `FormData` and returns 2xx — Formspree, Formspark and Web3Forms all
-do, all have free tiers:
+Wired to Formspree (`contact.endpoint` in `site.json`). The dialog posts
+`FormData` with `Accept: application/json` — without that header the endpoint
+answers with a redirect to its own thank-you page, which would defeat the modal.
 
-```json
-"contact": { "endpoint": "https://formspree.io/f/xxxxxxxx" }
-```
+This is the AJAX integration, hand-rolled rather than via `@formspree/ajax`.
+The library would add a dependency to duplicate what the dialog already does:
+submit state, a disabled button, error display and a honeypot. The Basic HTML
+guide would navigate away to Formspree's page, and there is no React here.
 
-With `endpoint` left `null` the dialog shows the address instead of a form, so
-the site never presents a control that silently does nothing. A hidden
-`_gotcha` honeypot field is included for spam.
+Error handling reads Formspree's `errors[].message` and shows it verbatim, so a
+rejected submission says why. Network failures reject with a `TypeError` whose
+message is "Failed to fetch" — meaningless to a visitor — so those are reported
+as "Could not reach the server" instead.
+
+Hidden fields: `_subject` to label the mail, `_gotcha` as a spam honeypot.
+
+Set `endpoint` back to `null` and the dialog shows the address instead of a
+form, so the site never presents a control that silently does nothing.
 
 The form asks for Name, **Email** and Message. The email field is not optional
 padding — without it a message arrives with no way to reply.

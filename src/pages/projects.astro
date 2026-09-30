@@ -2,7 +2,9 @@
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import site from '../data/site.json';
-import projects from '../data/projects.json';
+import projectEntries from '../data/projects.json';
+import { resolveProjects } from '../lib/github.js';
+const projects = await resolveProjects(projectEntries);
 ---
 <Base current="projects" title="Projects" description={`Things ${site.name} has built.`}>
   <section class="pagehead">

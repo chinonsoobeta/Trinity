@@ -8,13 +8,15 @@ import now from '../data/now.json';
 import listeningEntry from '../data/now-listening.json';
 import wearing from '../data/wearing.json';
 import { previewLinks } from '../lib/link-preview.js';
-import projects from '../data/projects.json';
+import projectEntries from '../data/projects.json';
+import { resolveProjects } from '../lib/github.js';
 import { getPosts } from '../lib/substack.js';
 import { resolveListening } from '../lib/music.js';
 
 const posts = await getPosts(3);
 const listening = await resolveListening(listeningEntry);
 const worn = await previewLinks(wearing.items);
+const projects = await resolveProjects(projectEntries);
 const featured = projects.filter((p) => p.featured).slice(0, 2);
 const longDate = (value) => new Date(value).toLocaleDateString('en-US', {
   timeZone: 'UTC', month: 'long', day: 'numeric', year: 'numeric',
