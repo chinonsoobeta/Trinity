@@ -7,7 +7,7 @@ Personal site for Chinonso Obeta. Built, not yet deployed.
 | | |
 |---|---|
 | Direction | Console — dark, modular, a rail of live modules |
-| Pages | Home, Writing index, Projects, Now/About |
+| Pages | Home, Writing index, Projects |
 | Viewports | Desktop (1280) and mobile (390) for each |
 | Built | Astro 7, static output, deploys to Vercel |
 
@@ -266,7 +266,7 @@ you're at your desk, so it would have been a hardcoded lie.
 | File | Holds |
 |---|---|
 | `src/data/site.json` | name, role, bio, coords, timezone, footer links |
-| `src/data/now.json` | Now copy, reading, About, At a glance, Current Machinery |
+| `src/data/machinery.json` | the Current Machinery rows |
 | `src/data/projects.json` | every project card |
 | `src/data/wearing.json` | the Currently Wearing tile |
 | `src/data/now-listening.json` | the Now Listening card |
@@ -284,7 +284,6 @@ Posts are not in a file — they come from the feed at build time.
   not a sampled value. If it's off, that one hex is the only thing to change
   (then re-check the contrast table above)
 - Instagram handle — add to `site.json` links and it slots in
-- `now.json` — Now copy, About, the "Open to" row
 - A screenshot for the Witness Tree card (`shot` is `null`, so it draws a
   placeholder). Put one in `public/` and point `shot` at it
 - An avatar image for the hero (currently a drawn placeholder)

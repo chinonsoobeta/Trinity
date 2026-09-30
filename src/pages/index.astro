@@ -4,7 +4,7 @@ import PostRow from '../components/PostRow.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import site from '../data/site.json';
-import now from '../data/now.json';
+import machinery from '../data/machinery.json';
 import listeningEntry from '../data/now-listening.json';
 import wearing from '../data/wearing.json';
 import { previewLinks } from '../lib/link-preview.js';
@@ -124,7 +124,7 @@ const spotifyUrl = listening.spotify
       <section class="card card--rail" style="--m: 7">
         <h2 class="label">Current Machinery</h2>
         <dl class="kv">
-          {now.machinery.map((row) => (
+          {machinery.map((row) => (
             <div><dt>{row.k}</dt><dd>{row.v}</dd></div>
           ))}
         </dl>
