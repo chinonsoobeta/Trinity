@@ -18,8 +18,32 @@ npm run build    # -> dist/
 npm run preview
 ```
 
-Vercel auto-detects Astro; no adapter or config needed. Set a deploy hook and
-call it from a Substack webhook (or a cron) so a new post rebuilds the site.
+Vercel auto-detects Astro; no adapter or config needed. Every push to `main`
+deploys.
+
+### Automatic rebuild
+
+New Substack posts and the Witness Tree "Updated" date only reach the site when
+it rebuilds. `.github/workflows/rebuild.yml` asks Vercel for a production build
+every six hours, and on demand: **Actions → Rebuild site → Run workflow**,
+useful right after publishing.
+
+One-time setup:
+
+1. **Vercel** → the project → Settings → Git → **Deploy Hooks**. Name it
+   (e.g. `scheduled`), branch `main`, create, copy the URL.
+2. **GitHub** → this repo → Settings → Secrets and variables → Actions →
+   **New repository secret**. Name `VERCEL_DEPLOY_HOOK`, value the URL.
+3. **Actions → Rebuild site → Run workflow.** A green run and a new deployment
+   in Vercel means it works.
+
+- The hook URL works like a password — anyone holding it can trigger builds —
+  which is why it is a secret and not in the file: this repository is public.
+- Without the secret, runs fail with a message saying so. A deleted hook fails
+  at once; only transient errors (timeouts, 429, 5xx) are retried.
+- GitHub pauses scheduled workflows in a public repository after 60 days with
+  no activity in it, emails you, and puts a re-enable button in the Actions
+  tab. Any commit counts, including an edit made in GitHub's web editor.
 
 Two things are fetched at build time, not in the browser: the Substack feed
 and the Now Listening lookup. Both degrade to the data on disk rather than

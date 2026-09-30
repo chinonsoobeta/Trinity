@@ -1,0 +1,40 @@
+name: Rebuild site
+
+# New Substack posts only reach the site when it rebuilds — and so does the
+# Witness Tree "Updated" date. This asks Vercel for a fresh production build
+# every six hours, and on demand: Actions tab → Rebuild site → Run workflow,
+# handy right after publishing.
+#
+# Needs one repository secret, VERCEL_DEPLOY_HOOK: the URL of a Deploy Hook
+# created in Vercel (Project Settings → Git → Deploy Hooks, branch `main`).
+# That URL works as a password — anyone holding it can trigger builds — so it
+# lives in a secret, never in this file; the repository is public.
+
+on:
+  schedule:
+    # Minute 17, not 0: GitHub delays top-of-the-hour scheduled runs the most.
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ask Vercel for a production build
+        env:
+          DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$DEPLOY_HOOK" ]; then
+            echo "::error::The VERCEL_DEPLOY_HOOK secret is not set. See the comment at the top of .github/workflows/rebuild.yml."
+            exit 1
+          fi
+          # --retry covers the transient failures only (timeouts, 429, 5xx); a
+          # 404 means the hook was deleted, and retrying cannot fix that.
+          curl --fail-with-body --silent --show-error \
+               --retry 3 --max-time 30 \
+               -X POST "$DEPLOY_HOOK"
+          echo
+          echo "Build requested."
