@@ -1,22 +1,12 @@
 [
   {
-    "name": "[Project name]",
-    "description": "[Two sentences on what it is, who it's for, and what made it worth building.]",
+    "name": "Witness Tree",
+    "description": "A bilingual, evidence-first public record of forest change in Canada. Satellite-observed and documented change across BC, Alberta, Ontario and Quebec, with confidence levels and source provenance shown rather than implied.",
     "status": "active",
-    "tags": ["[stack]", "2026"],
+    "tags": ["Next.js", "TypeScript", "open data"],
     "shot": null,
-    "live": null,
-    "source": null,
-    "featured": true
-  },
-  {
-    "name": "[Project name]",
-    "description": "[Two sentences on what it is and why it exists.]",
-    "status": "active",
-    "tags": ["[stack]", "2025"],
-    "shot": null,
-    "live": null,
-    "source": null,
+    "live": "https://www.witnesstree.ca",
+    "source": "https://github.com/chinonsoobeta/Witness_Tree",
     "featured": true
   }
 ]

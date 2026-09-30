@@ -11,8 +11,6 @@ Personal site for Chinonso Obeta. Built, not yet deployed.
 | Viewports | Desktop (1280) and mobile (390) for each |
 | Built | Astro 7, static output, deploys to Vercel |
 
-Design canvas: https://claude.ai/artifact/12qDFbG1Qurwx7iWwDydWF
-
 ```
 npm install
 npm run dev      # http://localhost:4321
@@ -34,14 +32,16 @@ failing the build.
 - **Location:** Vancouver, British Columbia
 - **Footer disclaimer:** "Views my own." — on every page, beside the copyright
 
-## `design/`
+## Design canvas — retired
 
-The original mockups, kept for reference. These are Design Component files
-(`.dc.html`) — HTML wrapped in an `<x-dc>` element, so they don't render
-standalone in a browser.
+The original mockups have been removed. They drifted from the code (they still
+showed a status dot cut from the build, a black redaction bar, the old
+near-black palette), and keeping two versions of the same design in step was
+work the canvas always lost. `src/` is the design now.
 
-**`src/` is now the source of truth, not `design/`.** The artboards have
-drifted: they still show the Online status dot, which was cut from the build.
+The artboards remain in git history at commit `3c29936` if they are ever
+wanted, and the canvas itself is untouched at
+https://claude.ai/artifact/12qDFbG1Qurwx7iWwDydWF.
 
 ## Writing — pulled from Substack
 
@@ -56,7 +56,9 @@ here, and there is no on-site post page.
   a placeholder for a post without one.
 - A feed outage does not fail the build: `src/lib/substack.js` warns, returns
   an empty list, and the pages fall back to linking straight to Substack.
-- Home shows the 4 most recent; the Writing index shows all, grouped by year.
+- Home shows the 3 most recent; the Writing index shows all, grouped by year.
+  Real titles run long — up to 193 characters — so three is what the card holds
+  without dominating the page.
 
 ## Now Listening
 
@@ -113,6 +115,17 @@ becomes something you change weekly, move the images to a host and store URLs
 instead.
 
 With `photo: null` the tile is just the item list.
+
+## Projects
+
+`src/data/projects.json`. One entry today: **Witness Tree**
+(witnesstree.ca / chinonsoobeta/Witness_Tree). Its description is lifted from
+the repo's own About line.
+
+Fields: `name`, `description`, `status` (`active` or `archived`, which drives
+the dot), `tags`, `shot` (an image path, or `null` for a placeholder), `live`,
+`source`, and `featured` — featured entries appear on the home page, everything
+appears on /projects.
 
 ## Links and contact
 
@@ -244,9 +257,9 @@ Posts are not in a file — they come from the feed at build time.
   not a sampled value. If it's off, that one hex is the only thing to change
   (then re-check the contrast table above)
 - Instagram handle — add to `site.json` links and it slots in
-- `projects.json` — every entry is still a placeholder
-- `wearing.json` — placeholder rows, no photo yet
 - `now.json` — Now copy, About, the "Open to" row
+- A screenshot for the Witness Tree card (`shot` is `null`, so it draws a
+  placeholder). Put one in `public/` and point `shot` at it
 - An avatar image for the hero (currently a drawn placeholder)
 - `site` in `astro.config.mjs` — needs the real domain before launch
 - Feed titles carry literal markdown asterisks (`*how*`); decide whether to

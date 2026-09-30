@@ -12,7 +12,7 @@ import projects from '../data/projects.json';
 import { getPosts } from '../lib/substack.js';
 import { resolveListening } from '../lib/music.js';
 
-const posts = await getPosts(4);
+const posts = await getPosts(3);
 const listening = await resolveListening(listeningEntry);
 const worn = await previewLinks(wearing.items);
 const featured = projects.filter((p) => p.featured).slice(0, 2);
