@@ -55,7 +55,8 @@ failing the build.
 ## Identity
 
 - **Name:** Chinonso Obeta
-- **Role:** Senior Policy Analyst, British Columbia Environmental Assessment Office
+- **Role:** Policy analyst (`site.role`, used in the page title and link
+  previews; deliberately names no employer, to match the bio)
 - **Location:** Vancouver, British Columbia
 - **Footer disclaimer:** "Views my own." — on every page, beside the copyright
 
