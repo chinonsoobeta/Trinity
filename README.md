@@ -222,8 +222,7 @@ padding — without it a message arrives with no way to reply.
   of redacted "document text". It is a static image, so it does not follow
   edits to the bio. Every page uses it.
 - `og:image` and `og:url` need absolute URLs, so `astro.config.mjs` sets `site`
-  from `VERCEL_PROJECT_PRODUCTION_URL` — Vercel's production domain, a custom
-  one once added — falling back to `datrinitypersonalsite.vercel.app`.
+  to `https://www.chinonsoobeta.dev`. Change it there if the domain changes.
 - Tab icon: `favicon.svg`, with `favicon-32.png` for browsers that want a
   bitmap. `apple-touch-icon.png` (180x180, full-bleed; iOS rounds the corners)
   is what Safari shows in Favorites and on a home screen.

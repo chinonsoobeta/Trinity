@@ -1,13 +1,8 @@
 import { defineConfig } from 'astro/config';
 
-// Link previews need absolute URLs. Vercel sets VERCEL_PROJECT_PRODUCTION_URL on
-// every build: the production domain (a custom one if added), without the
-// scheme — so this follows a future custom domain with no edit here. The
-// fallback is today's production address, for local builds or if the variable
-// is ever missing.
-const productionHost = process.env.VERCEL_PROJECT_PRODUCTION_URL || 'datrinitypersonalsite.vercel.app';
-
+// Link previews need absolute URLs. www is the canonical host; the bare
+// chinonsoobeta.dev redirects to it.
 export default defineConfig({
-  site: `https://${productionHost}`,
+  site: 'https://www.chinonsoobeta.dev',
   devToolbar: { enabled: false },
 });
