@@ -133,15 +133,20 @@ the song.
 
 ## Currently Wearing — manual
 
-`src/data/wearing.json`: an optional `photo` and a list of `{k, v}` rows. Same
-shape as Current Machinery, plus the photo.
+`src/data/wearing.json` holds `items`. Each is either a product link, which the
+build reads for a name and image, or an object filled in by hand:
+
+```json
+{ "url": "https://…", "name": "Levi's France Football Type III Jacket", "image": "/wearing/levis-jacket.jpg" }
+```
+
+Use the object form for shops that block automated requests. Levi's does: its
+pages return a bot challenge and its image server refuses direct requests, so
+nothing can be read from it at build time. With `image` null the tile shows the
+name alone, with no empty image box.
 
 Photos go in `public/wearing/` and are referenced as `/wearing/name.jpg`. Keep
-them under ~300KB — they live in git, so every version is kept forever. If this
-becomes something you change weekly, move the images to a host and store URLs
-instead.
-
-With `photo: null` the tile is just the item list.
+them under ~300KB — they live in git, so every version is kept forever.
 
 ## Projects — pulled from GitHub
 

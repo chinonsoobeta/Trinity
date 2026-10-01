@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import PostRow from '../components/PostRow.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import site from '../data/site.json';
 import machinery from '../data/machinery.json';
 import listeningEntry from '../data/now-listening.json';
@@ -113,11 +112,11 @@ const spotifyUrl = listening.spotify
           <div class="wear">
             {worn.map((item) => (
               <div class="wear__item">
-                <div class="wear__shot">
-                  {item.image
-                    ? <img src={item.image} alt="" loading="lazy" decoding="async" />
-                    : <ImagePlaceholder size={28} />}
-                </div>
+                {item.image && (
+                  <div class="wear__shot">
+                    <img src={item.image} alt="" loading="lazy" decoding="async" />
+                  </div>
+                )}
                 {item.name && <a class="wear__name" href={item.url} rel="noopener">{item.name}</a>}
               </div>
             ))}

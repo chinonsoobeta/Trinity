@@ -87,7 +87,13 @@ export async function previewLink(url) {
   };
 }
 
-export async function previewLinks(urls = []) {
-  const results = await Promise.all(urls.map(previewLink));
+// An item is either a link to read, or — for shops that block automated
+// requests, like Levi's — an object filled in by hand: { url, name, image }.
+export async function previewLinks(items = []) {
+  const results = await Promise.all(items.map((item) => (
+    typeof item === 'string'
+      ? previewLink(item)
+      : { url: item.url ?? null, name: item.name ?? null, image: item.image ?? null }
+  )));
   return results.filter(Boolean);
 }
