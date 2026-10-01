@@ -153,8 +153,10 @@ them under ~300KB — they live in git, so every version is kept forever.
 `src/data/projects.json`. One entry today: **Witness Tree**.
 
 Give an entry a `repo` (`"owner/name"`) and `src/lib/github.js` fills the card
-from the GitHub API at build time: description, homepage, source URL, language
-and topics as tags, archived state, and last-pushed date. Editing the repo's
+from the GitHub API at build time: description, homepage, language and topics
+as tags, archived state, and last-pushed date. The repository itself is never
+linked unless the entry sets `source` — Witness Tree's card links only to the
+live site. Editing the repo's
 About line updates the site.
 
 **The file wins; the repo fills whatever is left null, and always supplies

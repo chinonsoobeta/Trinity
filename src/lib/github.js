@@ -46,7 +46,9 @@ export async function resolveProject(entry) {
     description: entry.description ?? repo.description ?? null,
     // An empty homepage string means "not set", which ?? would happily keep.
     live: entry.live ?? (repo.homepage || null),
-    source: entry.source ?? repo.html_url ?? null,
+    // The repo is never offered as a link unless the file asks for one: a
+    // public repository is not necessarily one you want to send visitors to.
+    source: entry.source ?? null,
     tags: entry.tags?.length ? entry.tags : tagsFrom(repo),
     status: entry.status ?? (repo.archived ? 'archived' : 'active'),
     // Always the repo's: freshness is the one thing the file cannot know.
