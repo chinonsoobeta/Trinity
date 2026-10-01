@@ -533,7 +533,6 @@ a.project__name:hover { color: var(--accent-hi); }
 .contact__status[data-state='error'] { color: var(--accent); }
 .contact__status[data-state='ok'] { color: var(--ok); }
 
-.contact__fallback { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0; }
 
 /* Placeholder art inherits its container's colour (see ImagePlaceholder). */
 .post__thumb, .project__shot, .listening__art, .wear__shot { color: var(--dim); }

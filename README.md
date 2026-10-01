@@ -209,8 +209,8 @@ as "Could not reach the server" instead.
 
 Hidden fields: `_subject` to label the mail, `_gotcha` as a spam honeypot.
 
-Set `endpoint` back to `null` and the dialog shows the address instead of a
-form, so the site never presents a control that silently does nothing.
+Formspree delivers to the inbox on its account, so no email address is
+stored in this repository. A failed submission asks the visitor to try again.
 
 The form asks for Name, **Email** and Message. The email field is not optional
 padding — without it a message arrives with no way to reply.
@@ -333,18 +333,9 @@ Posts are not in a file — they come from the feed at build time.
 
 ## Outstanding
 
-- **Deployment protection.** The Vercel deployment currently 302s to Vercel
-  SSO, so nobody without an account can open it. Turn Deployment Protection off
-  for production before sharing the link
-- **A form backend** — `contact.endpoint` in `site.json`. Until it is set, the
-  contact dialog shows your address instead of a form
 - **Confirm the purple.** `--bg: #6F5296` is my read of the swatch you sent,
   not a sampled value. If it's off, that one hex is the only thing to change
   (then re-check the contrast table above)
 - Instagram handle — add to `site.json` links and it slots in
-- A screenshot for the Witness Tree card (`shot` is `null`, so it draws a
-  placeholder). Put one in `public/` and point `shot` at it
-- An avatar image for the hero (currently a drawn placeholder)
 - Feed titles carry literal markdown asterisks (`*how*`); decide whether to
   render them as emphasis or leave them
-- A real email alias to replace the Gmail address
